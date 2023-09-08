@@ -1,7 +1,11 @@
 # QQImpl
+## 项目说明
+本项目为通过逆向QQNT，将QQ封装的Mojo IPC模块独立出来，可以在任何项目中集成此模块，利用QQ Mojo IPC进行IPC通信。  
+同时逆向出调用WeChatOCR的方法，集成此模块也可以方便的调用WeChatOCR。  
+32位程序依赖parent-ipc-core-x86.dll  
+64位程序依赖parent-ipc-core-x64.dll
 
 ## 使用说明
-
 ### x86:
 1. 在VS项目中添加ocr_protobuf.pb.cc、QQImpl32.cpp
 2. 附加包含目录添加:  
