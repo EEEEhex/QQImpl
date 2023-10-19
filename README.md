@@ -6,13 +6,18 @@
 QQIMPL_TEST.7z是测试使用的, ParentIpc和ChildIpc用于测试Mojio IPC功能, OcrTest用于测试WeChatOCR功能
 
 ## 使用说明
+### 1. DLL版
+DLL版为将调用WeChatOCR的操作封装成了DLL, 请在Release下载编译好的DLL。  
+并在QQImplDLL\\UsageExample下载调用示例, 包括c++与python的调用示例。
+
+### 2. 文件版
 > 假设你的项目结构是这样的:  
 > .  
 > ├─Bin  
 > ├─YourProject  
 > ├─QQImpl  
 
-### IPC
+#### IPC
 > 32位程序依赖parent-ipc-core-x86.dll   
 > 64位程序依赖parent-ipc-core-x64.dll
 
@@ -24,13 +29,13 @@ QQIMPL_TEST.7z是测试使用的, ParentIpc和ChildIpc用于测试Mojio IPC功�
 2. 右键项目->生成依赖项->生成自定义->将masm勾上
 3. 右键QQIpcAsm.asm属性->项类型改为 Microsoft Macro Assembler
 
-### OCR
+#### OCR
 > 在QQImpl\\QQOCR\\ocr_lib中有编译好的libprotobuf (3.20.3), 可以自己编译protobuf, 再用protoc.exe编译一下QQImpl\\QQOCR\\ocr_protobuf\\ocr_protobuf.proto即可生成ocr_protobuf.pb.h与ocr_protobuf.pb.cc
 1. 在vs项目中添加文件: QQOcr.cpp ocr_protobuf.pb.cc
 2. 附加包含目录添加:  
 \$(SolutionDir)..\\QQImpl\\QQOCR  
 \$(SolutionDir)..\\QQImpl\\QQOCR\\ocr_protobuf\\  
-3. 在链接器附加依赖库添加: \$(SolutionDir)..\\QQImpl\\ocr_lib\\对应的lib   
+3. 在链接器附加依赖库添加: \$(SolutionDir)..\\QQImpl\\QQOCR\\ocr_lib\\对应的lib   
 4. 如果想要使用dll版的libprotobuf, 需要在预处理器定义里添加PROTOBUF_USE_DLLS
 
 如果是x64则还需要:
