@@ -1,11 +1,11 @@
 #pragma once
 /*****************************************************************//**
  * @file	QQIpc.h
- * @brief	此模块用于实现QQ Mojo IPC
+ * @brief	此模块用于实现QQ Mojo IPC (改为DLL导出)
  * @version 2.0
  * 
  * @author	0xEEEE
- * @date	2023.9.13
+ * @date	2023.11.03
  *********************************************************************/
 
 //此版本分离了IPC和OCR的实现 去除了C++20标准的依赖 并将32位和64位实现合并
@@ -95,14 +95,7 @@ namespace qqimpl
 			 * @param dll_path parent-ipc-core-x86/x64.dll的路径 默认为运行目录下
 			 * @return 成功返回true
 			 */
-			bool InitEnvA(std::string dll_path = "");
-
-			/**
-			 * @brief 初始化环境.
-			 * @param dll_path parent-ipc-core-x86/x64.dll的路径 默认为运行目录下
-			 * @return 成功返回true
-			 */
-			bool InitEnv(std::wstring dll_path = L"");
+			bool InitEnv(const char* dll_path = NULL);
 				
 			/**
 			 * @brief 设置dll内部的日志等级 [已被弃用].
@@ -112,15 +105,9 @@ namespace qqimpl
 		
 			/**
 			 * @brief 获取上一次的错误信息字符串.
-			 * @return 错误信息 
-			 */
-			std::string GetLastErrStrA();
-
-			/**
-			 * @brief 获取上一次的错误信息字符串.
 			 * @return 错误信息
 			 */
-			std::wstring GetLastErrStr();
+			const char* GetLastErrStr();
 		
 			/**
 			 * @brief 对pIMojoIpc->InitParentLog的封装.
@@ -133,17 +120,6 @@ namespace qqimpl
 			 * @brief 对pIMojoIpc->InitParentIpc()的封装.
 			 */
 			void InitParentIpc();
-
-			/**
-			 * @brief 对pIMojoIpc->LaunchChildProcess的封装.
-			 * @param file_path 子进程路径
-			 * @param callback 用户自定义接收消息的函数
-			 * @param cb_arg 传递给接收ipc消息回调函数的第一个参数
-			 * @param cmdlines 要添加的命令行参数 例如const char* cmd_args[] = {"-t", "-m"};
-			 * @param cmd_num  要添加的命令行参数的个数
-			 * @return 子进程PID 失败返回0
-			 */
-			int LaunchChildProcessA(std::string file_path, callback_ipc callback = nullptr, void* cb_arg = nullptr, char** cmdlines = nullptr, int cmd_num = 0);
 		
 			/**
 			 * @brief 对pIMojoIpc->LaunchChildProcess的封装.
@@ -154,7 +130,7 @@ namespace qqimpl
 			 * @param cmd_num  要添加的命令行参数的个数
 			 * @return 子进程PID 失败返回0
 			 */
-			int LaunchChildProcess(std::wstring file_path, callback_ipc callback = nullptr, void* cb_arg = nullptr, char** cmdlines = nullptr, int cmd_num = 0);
+			int LaunchChildProcess(const char* file_path, callback_ipc callback = NULL, void* cb_arg = NULL, char** cmdlines = NULL, int cmd_num = 0);
 
 			/**
 			 * @brief 对pIMojoIpc->ConnectedToChildProcess的封装.
@@ -166,11 +142,12 @@ namespace qqimpl
 			/**
 			 * @brief 对pIMojoIpc->SendMessageUsingBufferInIPCThread的封装.
 			 * @param pid 子进程的pid
-			 * @param command IPC_MSG
+			 * @param command IPC_MSG 以'\0'结尾的字符串
 			 * @param addition_msg 参数
+			 * @param addition_msg_size 参数大小
 			 * @return 成功返回true
 			 */
-			bool SendIpcMessage(int pid, std::string command, std::string addition_msg = "");
+			bool SendIpcMessage(int pid, const char* command, const char* addition_msg = NULL, int addition_msg_size = 0);
 		
 			/**
 			 * @brief 对pIMojoIpc->TerminateChildProcess的封装.
@@ -192,7 +169,7 @@ namespace qqimpl
 			HMODULE m_ipc_dll;
 			DWORD_PTR* m_ptr_IMojoIpc;
 		
-			std::wstring _last_err;
+			std::string _last_err;
 		};
 		
 		class MMMOJOCALL_API QQIpcChildWrapper
@@ -200,32 +177,19 @@ namespace qqimpl
 		public:
 			QQIpcChildWrapper();
 			~QQIpcChildWrapper();
-		
-			/**
-			 * @brief 获取上一次的错误信息字符串.
-			 * @return 错误信息
-			 */
-			std::string GetLastErrStrA();
 
 			/**
 			 * @brief 获取上一次的错误信息字符串.
 			 * @return 错误信息
 			 */
-			std::wstring GetLastErrStr();
-			
-			/**
-			 * @brief 初始化环境.
-			 * @param dll_path child(或parent, 因为这俩是一样的)-ipc.dll的路径 默认为运行目录下
-			 * @return 成功返回true
-			 */
-			bool InitEnvA(std::string dll_path = "");
+			const char* GetLastErrStr();
 
 			/**
 			 * @brief 初始化环境.
 			 * @param dll_path child(或parent, 因为这俩是一样的)-ipc.dll的路径 默认为运行目录下
 			 * @return 成功返回true
 			 */
-			bool InitEnv(std::wstring dll_path = L"");
+			bool InitEnv(const char* dll_path = NULL);
 		
 			/**
 			 * @brief 对pIMojoIpc->InitChildIpc()的封装.
@@ -248,13 +212,13 @@ namespace qqimpl
 			 * @param command IPC_MSG
 			 * @param addition_msg 参数
 			 */
-			void SendIpcMessage(std::string command, std::string addition_msg = "");
+			void SendIpcMessage(const char* command, const char* addition_msg = NULL, int addition_msg_size = 0);
 		
 		private:
 			HMODULE m_ipc_dll;
 			DWORD_PTR* m_ptr_IMojoIpc;
 		
-			std::wstring _last_err;
+			std::string _last_err;
 		};
 
 

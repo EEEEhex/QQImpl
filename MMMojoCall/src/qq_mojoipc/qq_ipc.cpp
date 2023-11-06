@@ -20,7 +20,7 @@ qqimpl::qqipc::QQIpcParentWrapper::QQIpcParentWrapper()
 {
 	m_ipc_dll = 0;
 	m_ptr_IMojoIpc = NULL;
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
 qqimpl::qqipc::QQIpcParentWrapper::~QQIpcParentWrapper()
@@ -65,7 +65,7 @@ void* qqimpl::qqipc::QQIpcParentWrapper::GetCallbackArg()
 	DWORD* pIMojoIpc = (DWORD*)(this->m_ptr_IMojoIpc);
 	if (pIMojoIpc == NULL)
 	{
-		_last_err = L"IMojoIpc is not init!";
+		_last_err = "IMojoIpc is not init!";
 		return nullptr;
 	}
 
@@ -73,35 +73,30 @@ void* qqimpl::qqipc::QQIpcParentWrapper::GetCallbackArg()
 }
 #endif // _WIN64
 
-bool qqimpl::qqipc::QQIpcParentWrapper::InitEnvA(std::string dll_path)
-{
-	std::wstring dll_path_w = utils::Utf8ToUnicode(dll_path);
-	return InitEnv(dll_path_w);
-}
 
-bool qqimpl::qqipc::QQIpcParentWrapper::InitEnv(std::wstring dll_path)
+bool qqimpl::qqipc::QQIpcParentWrapper::InitEnv(const char* dll_path)
 {
-	if (dll_path.empty())
+	if ((dll_path == NULL) || (strlen(dll_path) == 0))
 	{
 #ifdef _WIN64
-		dll_path = L"parent-ipc-core-x64.dll";
+		dll_path = "parent-ipc-core-x64.dll";
 #else
-		dll_path = L"parent-ipc-core-x86.dll";
+		dll_path = "parent-ipc-core-x86.dll";
 #endif
 	}
 
-	m_ipc_dll = LoadLibraryW(dll_path.c_str());
+	m_ipc_dll = LoadLibraryA(dll_path);
 	if (m_ipc_dll == NULL)
 	{
 
-		_last_err = L"ParentIpc LoadDll Err";
+		_last_err = "ParentIpc LoadDll Err";
 		return false;
 	}
 
 	LPFN_DLLGETCLASSOBJECT lpfnDllGetClassObject = (LPFN_DLLGETCLASSOBJECT)GetProcAddress(m_ipc_dll, "DllGetClassObject");
 	if (!lpfnDllGetClassObject)
 	{
-		_last_err = L"ParentIpc Can't Get \'DllGetClassObject\' Addr";
+		_last_err = "ParentIpc Can't Get \'DllGetClassObject\' Addr";
 		return false;
 	}
 
@@ -112,7 +107,7 @@ bool qqimpl::qqipc::QQIpcParentWrapper::InitEnv(std::wstring dll_path)
 	IClassFactory* pIClassFactory = NULL;
 	if (lpfnDllGetClassObject(clsid, IID_IClassFactory, (LPVOID*)(&pIClassFactory)) != S_OK)
 	{
-		_last_err = L"ParentIpc lpfnDllGetClassObject Err";
+		_last_err = "ParentIpc lpfnDllGetClassObject Err";
 		return false;
 	}
 
@@ -121,24 +116,19 @@ bool qqimpl::qqipc::QQIpcParentWrapper::InitEnv(std::wstring dll_path)
 	pIClassFactory->Release();
 	if (pIMojoIpc == NULL)
 	{
-		_last_err = L"pIClassFactory->CreateInstance Err";
+		_last_err = "pIClassFactory->CreateInstance Err";
 		return false;
 	}
 
 	this->m_ptr_IMojoIpc = pIMojoIpc;
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return true;
 }
 
-std::string qqimpl::qqipc::QQIpcParentWrapper::GetLastErrStrA()
+const char* qqimpl::qqipc::QQIpcParentWrapper::GetLastErrStr()
 {
-	return utils::UnicodeToUtf8(_last_err);
-}
-
-std::wstring qqimpl::qqipc::QQIpcParentWrapper::GetLastErrStr()
-{
-	return _last_err;
+	return _last_err.c_str();
 }
 
 //把有直接操作内存的和内联汇编的代码片段的编译优化关掉
@@ -176,7 +166,7 @@ void qqimpl::qqipc::QQIpcParentWrapper::InitLog(int level, void* callback)
 	}
 #endif 
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
 void qqimpl::qqipc::QQIpcParentWrapper::InitParentIpc()
@@ -194,24 +184,19 @@ void qqimpl::qqipc::QQIpcParentWrapper::InitParentIpc()
 	}
 #endif // _WIN64
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
-int qqimpl::qqipc::QQIpcParentWrapper::LaunchChildProcessA(std::string file_path, callback_ipc callback, void* cb_arg, char** cmdlines, int cmd_num)
-{
-	std::wstring file_path_w = utils::Utf8ToUnicode(file_path);
-	return LaunchChildProcess(file_path_w, callback, cb_arg, cmdlines, cmd_num);
-}
-
-int qqimpl::qqipc::QQIpcParentWrapper::LaunchChildProcess(std::wstring file_path, callback_ipc callback, void* cb_arg, char** cmdlines, int cmd_num)
+int qqimpl::qqipc::QQIpcParentWrapper::LaunchChildProcess(const char* file_path, callback_ipc callback, void* cb_arg, char** cmdlines, int cmd_num)
 {
 	//pIMojoIpc->LaunchChildProcess(wchar_t *path, DWORD 0,DWORD 0, LPVOID callback, LPVOID Launch函数的参数);//arg4: wrapper.node + 0x97D1B0
 	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
 		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 5);
 
 	int child_pid = 0;
-	void* lpArg = cb_arg, * lpCallback = callback;
-	const wchar_t* wzChildPath = file_path.c_str();
+	void* lpArg = cb_arg, *lpCallback = callback;
+	std::wstring file_path_w = utils::Utf8ToUnicode(file_path);
+	const wchar_t* wzChildPath = file_path_w.c_str();
 	if (callback == nullptr)
 		lpCallback = (void*)OnDefaultReceiveMsg;
 
@@ -233,11 +218,11 @@ int qqimpl::qqipc::QQIpcParentWrapper::LaunchChildProcess(std::wstring file_path
 
 	if (child_pid <= 0)
 	{
-		_last_err = L"pIMojoIpc->LaunchChildProcess Internal Error";
+		_last_err = "pIMojoIpc->LaunchChildProcess Internal Error";
 		return 0;
 	}
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return child_pid;
 }
 
@@ -245,7 +230,7 @@ bool qqimpl::qqipc::QQIpcParentWrapper::ConnectedToChildProcess(int pid)
 {
 	if (pid <= 0)
 	{
-		_last_err = L"ChildPid is not valid!";
+		_last_err = "ChildPid is not valid!";
 		return false;
 	}
 
@@ -267,36 +252,30 @@ bool qqimpl::qqipc::QQIpcParentWrapper::ConnectedToChildProcess(int pid)
 
 	if (call_result == E_FAIL)
 	{
-		_last_err = L"pIMojoIpc->ConnectedToChildProcess Internal Error";
+		_last_err = "pIMojoIpc->ConnectedToChildProcess Internal Error";
 		return false;
 	}
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return true;
 }
 
-bool qqimpl::qqipc::QQIpcParentWrapper::SendIpcMessage(int pid, std::string command, std::string addition_msg)
+bool qqimpl::qqipc::QQIpcParentWrapper::SendIpcMessage(int pid, const char* command, const char* addition_msg, int addition_msg_size)
 {
 	//pIMojoIpc->SendMessageUsingBufferInIPCThread(DWORD child_pid, char* command, DWORD 0, DWORD 0, char* addition_msg, int addition_msg_size);
 	//pIMojoIpc->SendIpcMessage(DWORD64 child_pid, char* msg_ptr, DWORD64 arg4, char* addition_ptr, DWORD64 addition_len);
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 7), addition_len = 0, dwPid = pid, call_result = 0;
-	const char* command_c = command.c_str(), *addition_c = NULL;
-	if (!addition_msg.empty())
-	{
-		addition_c = addition_msg.data();
-		addition_len = addition_msg.size();
-	}
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 7), 
+			addition_len = 0, dwPid = pid, call_result = 0;
 
 #ifdef _WIN64
-	call_result = SendIpcMessageAsm((DWORD_PTR)pIMojoIpc, dwPid, (DWORD_PTR)command_c, 1, (DWORD_PTR)addition_c, addition_len, dwFunc);
+	call_result = SendIpcMessageAsm((DWORD_PTR)pIMojoIpc, dwPid, (DWORD_PTR)command, 1, (DWORD_PTR)addition_msg, addition_msg_size, dwFunc);
 #else
 	_asm
 	{
-		push addition_len
-		push addition_c
+		push addition_msg_size
+		push addition_msg
 		push 0
 		push 0
-		push command_c
+		push command
 		push dwPid
 		push pIMojoIpc
 		call dwFunc
@@ -307,18 +286,18 @@ bool qqimpl::qqipc::QQIpcParentWrapper::SendIpcMessage(int pid, std::string comm
 	//失败会返回0x80004005 E_FAIL
 	if (call_result == E_FAIL)
 	{
-		_last_err = L"pIMojoIpc->SendMessageUsingBufferInIPCThread Internal Error";
+		_last_err = "pIMojoIpc->SendMessageUsingBufferInIPCThread Internal Error";
 		return false;
 	}
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return true;
 }
 
 bool qqimpl::qqipc::QQIpcParentWrapper::TerminateChildProcess(int pid, int exit_code, bool wait_)
 {
 	//pIMojoIpc->TerminateChildProcess(DWORD child_pid, int exit_code, bool wait);
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 8), dwPid = pid, call_result = 0;
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 8), 
+			dwPid = pid, call_result = 0;
 	DWORD_PTR arg_wait = (DWORD_PTR)wait_;
 
 #ifdef _WIN64
@@ -337,18 +316,18 @@ bool qqimpl::qqipc::QQIpcParentWrapper::TerminateChildProcess(int pid, int exit_
 
 	if (call_result == E_FAIL)
 	{
-		_last_err = L"pIMojoIpc->TerminateChildProcess Internal Error";
+		_last_err = "pIMojoIpc->TerminateChildProcess Internal Error";
 		return false;
 	}
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return true;
 }
 
 int qqimpl::qqipc::QQIpcParentWrapper::ReLaunchChildProcess(int pid)
 {
 	//pIMojoIpc->ReLaunchChildProcess(DWORD child_pid);
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 9), dwPid = pid, call_result = 0;
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 9), 
+			dwPid = pid, call_result = 0;
 
 #ifdef _WIN64
 	call_result = ReLaunchChildProcessAsm((DWORD_PTR)pIMojoIpc, dwPid, dwFunc);
@@ -364,10 +343,10 @@ int qqimpl::qqipc::QQIpcParentWrapper::ReLaunchChildProcess(int pid)
 
 	if (call_result == E_FAIL)
 	{
-		_last_err = L"pIMojoIpc->ReLaunchChildProcess Internal Error";
+		_last_err = "pIMojoIpc->ReLaunchChildProcess Internal Error";
 		return 0;
 	}
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return call_result;
 }
 #pragma optimize( "", on )
@@ -377,51 +356,40 @@ qqimpl::qqipc::QQIpcChildWrapper::QQIpcChildWrapper()
 {
 	m_ipc_dll = 0;
 	m_ptr_IMojoIpc = NULL;
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
 qqimpl::qqipc::QQIpcChildWrapper::~QQIpcChildWrapper()
 {
 }
 
-std::string qqimpl::qqipc::QQIpcChildWrapper::GetLastErrStrA()
+const char* qqimpl::qqipc::QQIpcChildWrapper::GetLastErrStr()
 {
-	return utils::UnicodeToUtf8(this->_last_err);
+	return this->_last_err.c_str();
 }
 
-std::wstring qqimpl::qqipc::QQIpcChildWrapper::GetLastErrStr()
-{
-	return this->_last_err;
-}
-
-bool qqimpl::qqipc::QQIpcChildWrapper::InitEnvA(std::string dll_path)
-{
-	std::wstring dll_path_w = utils::Utf8ToUnicode(dll_path);
-	return qqimpl::qqipc::QQIpcChildWrapper::InitEnv(dll_path_w);
-}
-
-bool qqimpl::qqipc::QQIpcChildWrapper::InitEnv(std::wstring dll_path)
-{
-	if (dll_path.empty())
+bool qqimpl::qqipc::QQIpcChildWrapper::InitEnv(const char* dll_path)
+{	
+	if ((dll_path == NULL) || (strlen(dll_path) == 0))
 	{
 #ifdef _WIN64
-		dll_path = L"parent-ipc-core-x64.dll";
+		dll_path = "parent-ipc-core-x64.dll";
 #else
-		dll_path = L"parent-ipc-core-x86.dll";
+		dll_path = "parent-ipc-core-x86.dll";
 #endif
 	}
 
-	m_ipc_dll = LoadLibraryW(dll_path.c_str());
+	m_ipc_dll = LoadLibraryA(dll_path);
 	if (m_ipc_dll == NULL)
 	{
-		_last_err = L"ChildIpc LoadDll Err";
+		_last_err = "ChildIpc LoadDll Err";
 		return false;
 	}
 
 	LPFN_DLLGETCLASSOBJECT lpfnDllGetClassObject = (LPFN_DLLGETCLASSOBJECT)GetProcAddress(m_ipc_dll, "DllGetClassObject");
 	if (!lpfnDllGetClassObject)
 	{
-		_last_err = L"Can't Get \'DllGetClassObject\' Addr";
+		_last_err = "Can't Get \'DllGetClassObject\' Addr";
 		return false;
 	}
 
@@ -432,7 +400,7 @@ bool qqimpl::qqipc::QQIpcChildWrapper::InitEnv(std::wstring dll_path)
 	IClassFactory* pIClassFactory = NULL;
 	if (lpfnDllGetClassObject(clsid, IID_IClassFactory, (LPVOID*)(&pIClassFactory)) != S_OK)
 	{
-		_last_err = L"lpfnDllGetClassObject Err:[{}]";
+		_last_err = "lpfnDllGetClassObject Err:[{}]";
 		return false;
 	}
 
@@ -441,21 +409,21 @@ bool qqimpl::qqipc::QQIpcChildWrapper::InitEnv(std::wstring dll_path)
 	pIClassFactory->Release();
 	if (pIMojoIpc == NULL)
 	{
-		_last_err = L"pIClassFactory->CreateInstance Err";
+		_last_err = "pIClassFactory->CreateInstance Err";
 		return false;
 	}
 
 	this->m_ptr_IMojoIpc = pIMojoIpc;
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 	return true;
 }
 
 #pragma optimize( "", off )
 void qqimpl::qqipc::QQIpcChildWrapper::InitChildIpc()
 {
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 3);//pIMojoIpc->InitChildIpc()
+	//pIMojoIpc->InitChildIpc()
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 3);
 
 #ifdef _WIN64
 	InitChildIpcAsm((DWORD_PTR)pIMojoIpc, dwFunc);
@@ -467,13 +435,13 @@ void qqimpl::qqipc::QQIpcChildWrapper::InitChildIpc()
 	}
 #endif // _WIN64
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
 void qqimpl::qqipc::QQIpcChildWrapper::InitLog(int level, void* callback)
 {
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 4);	//pIMojoIpc->InitChildLog()
+	//pIMojoIpc->InitChildLog()
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 4);
 
 #ifdef _WIN64
 	InitLogAsm((DWORD_PTR)pIMojoIpc, level, (DWORD_PTR)callback, dwFunc);
@@ -485,13 +453,13 @@ void qqimpl::qqipc::QQIpcChildWrapper::InitLog(int level, void* callback)
 	}
 #endif // _WIN64
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
 void qqimpl::qqipc::QQIpcChildWrapper::SetChildReceiveCallback(callback_ipc callback)
 {
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 5);//pIMojoIpc->SetChildReceiveCallbackAndCOMPtr()
+	//pIMojoIpc->SetChildReceiveCallbackAndCOMPtr()
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 5);
 	DWORD_PTR ipc_ptr_addr = (DWORD_PTR)(&(this->m_ptr_IMojoIpc));//这个参数要是一个全局变量, 这里用类成员来代替
 	DWORD_PTR* lpCallback = (DWORD_PTR*)(callback);
 
@@ -507,36 +475,29 @@ void qqimpl::qqipc::QQIpcChildWrapper::SetChildReceiveCallback(callback_ipc call
 	}
 #endif // _WIN64
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 
-void qqimpl::qqipc::QQIpcChildWrapper::SendIpcMessage(std::string command, std::string addition_msg)
+void qqimpl::qqipc::QQIpcChildWrapper::SendIpcMessage(const char* command, const char* addition_msg, int addition_msg_size)
 {
 	//pIMojoIpc->ChildSendMessageUsingBuffer(char* command, DWORD 0, DWORD 0, char* addition_msg, int addition_msg_size);
-	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc,
-		dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 7), addition_len = 0;
-	const char* command_c = command.c_str(), * addition_c = NULL;
-	if (!addition_msg.empty())
-	{
-		addition_c = addition_msg.data();
-		addition_len = addition_msg.size();
-	}
+	DWORD_PTR* pIMojoIpc = this->m_ptr_IMojoIpc, dwFunc = *((DWORD_PTR*)(*pIMojoIpc) + 7);
 
 #ifdef _WIN64
-	ChildSendIpcMessageAsm((DWORD_PTR)pIMojoIpc, (DWORD64)command_c, 0, (DWORD_PTR)addition_c, addition_len, dwFunc);
+	ChildSendIpcMessageAsm((DWORD_PTR)pIMojoIpc, (DWORD64)command, 0, (DWORD_PTR)addition_msg, addition_msg_size, dwFunc);
 #else
 	_asm
 	{
-		push addition_len
-		push addition_c
+		push addition_msg_size
+		push addition_msg
 		push 0
 		push 0
-		push command_c
+		push command
 		push pIMojoIpc
 		call dwFunc
 	}
 #endif // _WIN64
 
-	_last_err = L"ERR_OK";
+	_last_err = "ERR_OK";
 }
 #pragma optimize( "", on )

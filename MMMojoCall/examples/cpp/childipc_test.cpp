@@ -8,13 +8,14 @@ void __stdcall OnChildReceiveMsg32(void* pArg, char* msg, int arg3, int arg4, ch
 {
     //std::cout << "[ " << __FUNCTION__ << "] | Arg: 0x" << std::hex << pArg << std::endl;
     std::string msg_str = msg, add_msg_str(addition_msg, addition_msg_size);
-    std::cout << "[ " << __FUNCTION__ << "] | Msg: " << msg_str << std::endl;
-    std::cout << "[ " << __FUNCTION__ << "] | Addition Msg Size: " << addition_msg_size << std::endl;
+    std::cout << "[*] [C] [ " << __FUNCTION__ << "] | Msg: " << msg_str << std::endl;
+    std::cout << "[*] [C] [ " << __FUNCTION__ << "] | Addition Msg Size: " << addition_msg_size << std::endl;
     if (addition_msg_size != 0)
     {
-        std::cout << "[ " << __FUNCTION__ << "] | The Addition Msg: ";
+        std::cout << "[*] [C] [ " << __FUNCTION__ << "] | The Addition Msg: ";
         for (size_t i = 0; i < addition_msg_size; i++)
-            printf("0x%02X ", (byte)(addition_msg[i]));
+            printf_s("0x%02X ", (byte)(addition_msg[i]));
+        printf_s("(%s)", addition_msg);
         puts("");
     }
 }
@@ -24,13 +25,14 @@ void OnChildReceiveMsg64(void* pArg, char* msg, int arg3, char* addition_msg, in
     //std::cout << "[ " << __FUNCTION__ << "] | Arg: 0x" << std::hex << pArg << std::endl;
 
     std::string msg_str = msg, add_msg_str(addition_msg, addition_msg_size);
-    std::cout << "[ " << __FUNCTION__ << "] | Msg: " << msg_str << std::endl;
-    std::cout << "[ " << __FUNCTION__ << "] | Addition Msg Size: " << addition_msg_size << std::endl;
+    std::cout << "[*] [C] [ " << __FUNCTION__ << "] | Msg: " << msg_str << std::endl;
+    std::cout << "[*] [C] [ " << __FUNCTION__ << "] | Addition Msg Size: " << addition_msg_size << std::endl;
     if (addition_msg_size != 0)
     {
-        std::cout << "[ " << __FUNCTION__ << "] | The Addition Msg: ";
+        std::cout << "[*] [C] [ " << __FUNCTION__ << "] | The Addition Msg: ";
         for (size_t i = 0; i < addition_msg_size; i++)
-            printf("0x%02X ", (byte)(addition_msg[i]));
+            printf_s("0x%02X ", (byte)(addition_msg[i]));
+        printf_s("(%s)", addition_msg);
         puts("");
     }
 
@@ -39,13 +41,13 @@ void OnChildReceiveMsg64(void* pArg, char* msg, int arg3, char* addition_msg, in
 
 int main()
 {
-    std::cout << "Child Begin!\n";
+    std::cout << "[+] [C] Child Begin!\n";
 
     qqipc::QQIpcChildWrapper child_ipc;
 
     if (!child_ipc.InitEnv())
     {
-        std::cout << "[!] Init Child Err: " << child_ipc.GetLastErrStrA() << std::endl;
+        std::cout << "[!] [C] Init Child Err: " << child_ipc.GetLastErrStr() << std::endl;
         getchar(); return 0;
     }
 
@@ -57,9 +59,11 @@ int main()
 #endif // _WIN64
     child_ipc.InitChildIpc();
     
-    std::cout << "Press any key to SendIpcMessage to Parent: ";
+    std::cout << "[=] [C] Press any key to SendIpcMessage to Parent: \n";
     getchar();
-    child_ipc.SendIpcMessage("child_test", "addition_test_child");
+
+    std::string addtion_msg = "addition_test_child";
+    child_ipc.SendIpcMessage("child_test", addtion_msg.data(), addtion_msg.size());
 
     MSG msg;
     // 主消息循环:
