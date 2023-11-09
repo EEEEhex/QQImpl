@@ -203,6 +203,11 @@ namespace mmmojocall
 		m_connect_con_var.notify_all();
 	}
 
+	bool UtilityManager::GetConnectState()
+	{
+		return m_connect_state;
+	}
+
 	void UtilityManager::CallUsrCallback(int request_id, const void* serialized_data, int data_size, std::string pull_or_push)
 	{
 		if (pull_or_push == "pull")

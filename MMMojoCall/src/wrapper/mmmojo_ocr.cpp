@@ -150,30 +150,40 @@ namespace mmmojocall
 		m_connect_con_var.notify_all();
 	}
 
+	
+	bool OCRManager::GetConnectState()
+	{
+		return m_connect_state;
+	}
+
 	void OCRManager::CallUsrCallback(int request_id, const void* serialized_data, int data_size)
 	{
 		ocr_protobuf::OcrResponse ocr_response;
 		ocr_response.ParseFromArray(serialized_data, data_size);
 		uint32_t task_id = ocr_response.task_id();
+		uint32_t type = ocr_response.type();
 
-		if (task_id >= 1 && task_id <= OCR_MAX_TASK_ID)
+		if (type == 0)//如果Start后立马发送OCR任务请求 则启动PUSH回调时就记录了ID和PIC的信息 会被启动回调抹掉 所以需要判断一下
 		{
-			std::string pic_path;
-			const char* pic_path_ptr = nullptr;
-			if (m_id_path.count(task_id) > 0)
+			if (task_id >= 1 && task_id <= OCR_MAX_TASK_ID)
 			{
-				pic_path = m_id_path[task_id];
-				pic_path_ptr = pic_path.c_str();
-			}
-				
-			if (m_usr_callback != nullptr)
-			{
-				m_usr_callback(pic_path_ptr, serialized_data, data_size);
-			}
+				std::string pic_path;
+				const char* pic_path_ptr = nullptr;
+				if (m_id_path.count(task_id) > 0)
+				{
+					pic_path = m_id_path[task_id];
+					pic_path_ptr = pic_path.c_str();
+				}
+					
+				if (m_usr_callback != nullptr)
+				{
+					m_usr_callback(pic_path_ptr, serialized_data, data_size);
+				}
 
-			//删除id与pic_path的map
-			SetTaskIdIdle(task_id);
-			m_id_path.erase(task_id);
+				//删除id与pic_path的map
+				SetTaskIdIdle(task_id);
+				m_id_path.erase(task_id);
+			}
 		}
 	}
 

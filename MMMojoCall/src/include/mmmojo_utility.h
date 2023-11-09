@@ -100,6 +100,12 @@ namespace mmmojocall
 		 */
 		void SetConnectState(bool connect);
 
+		/*
+		 * @brief 获取连接状态
+		 * @return 是否连接上 
+		 */
+		bool GetConnectState();
+
 		/**
 		 * @brief 调用用户设置的回调函数.
 		 * @param request_id RequstIdUtility
