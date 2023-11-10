@@ -13,7 +13,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 option(XPLUGIN_WRAPPER "Enable this to build the OCR and Utility Wrapper Code" ON)
 option(BUILD_QQIPC "Enable this to build the QQ Mojo IPC code" OFF)
 option(BUILD_CPPEXAMPLE "Enable this to build the c++ usage example" OFF)
-option(BUILD_WITH_SWIG_PY "Build with SWIG python" OFF)
+option(EXAMPLE_USE_JSON "Example Codde's callback function data using protobuf or json" ON)
+option(BUILD_PURE_C_MODE "Export Pure C Interface" OFF)
 
 # add mmmojo_call src file
 aux_source_directory(src SRC_FILES)
@@ -65,6 +66,11 @@ if (XPLUGIN_WRAPPER)
 	add_definitions(-DUSE_WRAPPER)
 endif()
 
+# add PURE_C_MODE marco
+if (BUILD_PURE_C_MODE)
+	add_definitions(-DPURE_C_MODE)
+endif()
+
 # add protobuf link lib
 if (XPLUGIN_WRAPPER)
 	# which arch
@@ -84,49 +90,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	DEBUG_POSTFIX _d
 	)
 
-# build use swig c++ to python
-if (BUILD_WITH_SWIG_PY)
-	message(FATAL_ERROR "在SWIG中 不知道怎么把python函数转为void*传给c++ 试了好多方法都不行 先放弃了")
-	if (NOT XPLUGIN_WRAPPER)
-		message(FATAL_ERROR "这块没写 建议把xplugin wrapper code一块BUILD了")
-	endif()
-
-	# check swig and python env
-	find_package(Python COMPONENTS Development)
-	if (NOT Python_Development_FOUND)
-		message(FATAL_ERROR "Can't Find Your Python Dir!")
-	endif()
-
-	find_package(SWIG REQUIRED)
-	if (NOT SWIG_FOUND)	
-		message(FATAL_ERROR "Can't Find Your Swig.exe!")
-	endif()	
-
-	# UseSWIG
-	include (${SWIG_USE_FILE})
-
-	# set .py swig wrapper output dir
-	#set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/$<IF:$<CONFIG:Debug>,Debug,Release>)
-
-	set(SWIG2PY mmmcall_wrapper)
-
-	set_property(SOURCE swig/mmmojo_call.i PROPERTY CPLUSPLUS ON)
-	swig_add_library(${SWIG2PY} LANGUAGE python SOURCES swig/mmmojo_call.i)
-	set_property(TARGET ${SWIG2PY} PROPERTY FOLDER "SWIG")
-
-	# include python embeded header
-	target_include_directories(${SWIG2PY} PRIVATE ${Python_INCLUDE_DIRS})
-	target_link_directories(${SWIG2PY} PRIVATE ${Python_LIBRARY_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
-	target_link_libraries(${SWIG2PY} ${Python_LIBRARIES} ${PROJECT_NAME})
-endif()
-
-
-
 # build c++ usage example
 if (BUILD_CPPEXAMPLE)
+	if (EXAMPLE_USE_JSON)
+		add_definitions(-DEXAMPLE_USE_JSON)
+	endif()
+
 	set(XPLUGIN_USAGE xplugin_test)
 	set(XPLUGIN_USAGE_SRC examples/cpp/xplugin_test.cpp)
-	if (XPLUGIN_WRAPPER)
+	if (XPLUGIN_WRAPPER AND NOT EXAMPLE_USE_JSON)
 		list(APPEND XPLUGIN_USAGE_SRC src/wrapper/ocr_protobuf.pb.cc)
 		list(APPEND XPLUGIN_USAGE_SRC src/wrapper/utility_protobuf.pb.cc)
 	endif()
@@ -141,7 +113,7 @@ if (BUILD_CPPEXAMPLE)
 	add_dependencies(${XPLUGIN_USAGE} ${PROJECT_NAME})
 	
 	target_link_libraries(${XPLUGIN_USAGE} PRIVATE $(SolutionDir)$<IF:$<CONFIG:Debug>,Debug,Release>/${PROJECT_NAME}$<$<CONFIG:Debug>:_d>.lib)
-	if (XPLUGIN_WRAPPER)	
+	if (XPLUGIN_WRAPPER AND NOT EXAMPLE_USE_JSON)	
 		target_link_libraries(${XPLUGIN_USAGE} PRIVATE ${CMAKE_SOURCE_DIR}/3rdparty/libprotobuf_${ARCH_SUFFIX}_MT$<$<CONFIG:Debug>:d>.lib)
 	endif()
 

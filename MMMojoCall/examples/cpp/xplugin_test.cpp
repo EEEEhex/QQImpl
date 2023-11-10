@@ -29,33 +29,17 @@ void UsrReadOnPush(uint32_t request_id, const void* request_info, void* user_dat
 	std::cout << "\n]" << std::endl;
 }
 
-//↓mmmojo::common::MMMojoReadOnPull;
-void UsrReadOnPull(uint32_t request_id, const void* request_info, void* user_data)
-{
-	std::cout << "[↓] " << __FUNCTION__ << " [RequestID: " << request_id << "] :\n[\n";
-
-	uint32_t pb_size;
-	const void* pb_data = mmmojocall::GetPbSerializedData(request_info, pb_size);
-	
-	std::cout << "\t[*] Request ID: " << request_id << " | Protobuf Size: " << pb_size << std::endl;
-	std::cout << "\t[*] Protobuf Data: ";
-	for (size_t i = 0; i < pb_size; i++)
-	{
-		printf_s("0x%02X ", ((LPBYTE)pb_data)[i]);
-	}
-
-	mmmojocall::RemoveReadInfo(request_info);
-
-	std::cout << "\n]" << std::endl;
-}
-
 #ifdef USE_WRAPPER
-void OCRUsrReadOnPush(const char* pic_path, const void* pb_data, int pb_size)
+void OCRUsrReadOnPush(const char* pic_path, const void* data, int data_size)
 {
 	std::cout << "[↓] " << __FUNCTION__ << ":\n[\n";
 
+#ifdef EXAMPLE_USE_JSON
+	//此时参数data为json字符串
+	std::cout << (char*)data << std::endl;
+#else
 	ocr_protobuf::OcrResponse ocr_response;
-	ocr_response.ParseFromArray(pb_data, pb_size);
+	ocr_response.ParseFromArray(data, data_size);
 
 	char out_buf[512] = { 0 };
 	sprintf_s(out_buf, sizeof(out_buf), "\t[*] type: %d task id: %d errCode: %d\n", ocr_response.type(), ocr_response.task_id(), ocr_response.err_code());
@@ -92,9 +76,10 @@ void OCRUsrReadOnPush(const char* pic_path, const void* pb_data, int pb_size)
 	}
 
 	std::cout << "\n]" << std::endl;
+#endif
 }
 
-void UtilityUsrReadOnPush(int type, const void* serialized_data, int data_size)
+void UtilityUsrReadOnPush(int type, const void* data, int data_size)
 {
 	std::cout << "[↓] " << __FUNCTION__ << " [RequestID: " << type << "] :\n[\n";
 
@@ -102,13 +87,17 @@ void UtilityUsrReadOnPush(int type, const void* serialized_data, int data_size)
 	{
 	case mmmojocall::RequestIdUtility::UtilityTextScanPushResp:
 	{
+#ifdef EXAMPLE_USE_JSON
+		std::cout << (char*)data << std::endl;
+#else
 		utility_protobuf::TextScanMessage text_scan_msg;
-		text_scan_msg.ParseFromArray(serialized_data, data_size);
+		text_scan_msg.ParseFromArray(data, data_size);
 		
 		char out_buf[512] = { 0 };
 		sprintf_s(out_buf, sizeof(out_buf), "\t[*] TextScanResult: ID: [%d] | PicPath: [%s] | HaveText?: [%d] | UKN0: [%d] | Rate: [%f]\n", 
 				text_scan_msg.text_scan_id(), text_scan_msg.pic_path().c_str(), text_scan_msg.have_text(), text_scan_msg.unknown_0(), text_scan_msg.rate());
 		std::cout << out_buf;
+#endif // EXAMPLE_USE_JSON
 	}
 		break;
 	default:
@@ -118,7 +107,7 @@ void UtilityUsrReadOnPush(int type, const void* serialized_data, int data_size)
 	std::cout << "\n]" << std::endl;
 }
 
-void UtilityUsrReadOnPull(int type, const void* serialized_data, int data_size)
+void UtilityUsrReadOnPull(int type, const void* data, int data_size)
 {
 	std::cout << "[↓] " << __FUNCTION__ << " [RequestID: " << type << "] :\n[\n";
 
@@ -131,8 +120,11 @@ void UtilityUsrReadOnPull(int type, const void* serialized_data, int data_size)
 		break;
 	case mmmojocall::RequestIdUtility::UtilityQRScanPullResp:
 	{
+#ifdef EXAMPLE_USE_JSON
+		std::cout << (char*)data << std::endl;
+#else
 		utility_protobuf::QRScanRespMessage qrscan_response;
-		qrscan_response.ParseFromArray(serialized_data, data_size);
+		qrscan_response.ParseFromArray(data, data_size);
 
 		std::cout << "\t[*] QRScanResult UKN0: [" << qrscan_response.unknown_0() << "] :\n\t[\n";
 		for (int i = 0; i < qrscan_response.qr_result_size(); i++)
@@ -150,6 +142,7 @@ void UtilityUsrReadOnPull(int type, const void* serialized_data, int data_size)
 			std::cout << out_buf;
 		}
 		std::cout << "\t]";
+#endif
 	}
 		break;
 	default:
@@ -195,7 +188,6 @@ int main()
 	}
 	xplugin_manager.AppendSwitchNativeCmdLine("user-lib-dir", wechat_dir.c_str());//添加需要的Switch命令行
 	xplugin_manager.SetOneCallback(MMMojoEnvironmentCallbackType::kMMReadPush, UsrReadOnPush);//设置ReadPush回调函数
-	xplugin_manager.SetOneCallback(MMMojoEnvironmentCallbackType::kMMReadPull, UsrReadOnPull);//设置ReadPull回调函数
 	if (!xplugin_manager.InitMMMojoEnv())//启动环境和组件
 	{
 		std::cout << "\033[31m[!] " << xplugin_manager.GetLastErrStr() << "\033[0m\n";
@@ -232,6 +224,9 @@ int main()
 		return 1;
 	}
 
+#ifdef EXAMPLE_USE_JSON
+	ocr_manager.SetCallbackDataMode(true);//回调函数的参数传入json
+#endif //EXAMPLE_USE_JSON
 	ocr_manager.SetReadOnPush(OCRUsrReadOnPush);
 	if (!ocr_manager.StartWeChatOCR())
 	{
@@ -265,6 +260,9 @@ int main()
 		return 1;
 	}
 
+#ifdef EXAMPLE_USE_JSON
+	utility_manager.SetCallbackDataMode(true);//回调函数的参数传入json
+#endif //EXAMPLE_USE_JSON
 	utility_manager.SetReadOnPull(UtilityUsrReadOnPull);
 	utility_manager.SetReadOnPush(UtilityUsrReadOnPush);
 	if (!utility_manager.StartWeChatUtility())

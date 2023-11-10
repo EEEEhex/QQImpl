@@ -1,6 +1,8 @@
 #include "mmmojo_utility.h"
 #include "utils.h"
 
+#include <google/protobuf/util/json_util.h>
+
 namespace qqimpl
 {
 namespace mmmojocall
@@ -31,7 +33,7 @@ namespace mmmojocall
 
 			uint32_t pb_size;
 			const void* pb_data = mmmojocall::GetPbSerializedData(request_info, pb_size);
-			
+
 			pThis->CallUsrCallback(request_id, pb_data, pb_size, "pull");
 
 			mmmojocall::RemoveReadInfo(request_info);
@@ -76,6 +78,7 @@ namespace mmmojocall
 	{
 		m_wechatutility_running = false;
 		m_connect_state = false;
+		m_cb_data_use_json = false;
 		m_usr_cb_pull = nullptr;
 		m_usr_cb_push = nullptr;
 
@@ -208,20 +211,64 @@ namespace mmmojocall
 		return m_connect_state;
 	}
 
-	void UtilityManager::CallUsrCallback(int request_id, const void* serialized_data, int data_size, std::string pull_or_push)
+	void UtilityManager::SetCallbackDataMode(bool use_json)
+	{
+		m_cb_data_use_json = use_json;
+	}
+
+	void UtilityManager::CallUsrCallback(int request_id, const void* data, int data_size, std::string pull_or_push)
 	{
 		if (pull_or_push == "pull")
 		{
 			if (m_usr_cb_pull != nullptr)
 			{
-				m_usr_cb_pull(request_id, serialized_data, data_size);
+				std::string json_string;
+				int data_size_ = data_size;
+				const void* data_ = data;
+				if (m_cb_data_use_json)
+				{
+					if (request_id == mmmojocall::RequestIdUtility::UtilityQRScanPullResp)
+					{
+						utility_protobuf::QRScanRespMessage qrscan_resp;
+						qrscan_resp.ParseFromArray(data, data_size);
+
+						google::protobuf::util::JsonPrintOptions options;
+						options.add_whitespace = true;
+						options.always_print_primitive_fields = true;
+						options.preserve_proto_field_names = true;
+						MessageToJsonString(qrscan_resp, &json_string, options);
+						data_ = json_string.data();
+						data_size_ = json_string.size();
+					}
+				}
+
+				m_usr_cb_pull(request_id, data_, data_size_);
 			}
 		}
 		else if (pull_or_push == "push")
 		{
 			if (m_usr_cb_push != nullptr)
 			{
-				m_usr_cb_push(request_id, serialized_data, data_size);
+				std::string json_string;
+				int data_size_ = data_size;
+				const void* data_ = data;
+				if (m_cb_data_use_json)
+				{
+					if (request_id == mmmojocall::RequestIdUtility::UtilityTextScanPushResp)
+					{
+						utility_protobuf::TextScanMessage text_scan_msg;
+						text_scan_msg.ParseFromArray(data, data_size);
+
+						google::protobuf::util::JsonPrintOptions options;
+						options.add_whitespace = true;
+						options.always_print_primitive_fields = true;
+						options.preserve_proto_field_names = true;
+						MessageToJsonString(text_scan_msg, &json_string, options);
+						data_ = json_string.data();
+						data_size_ = json_string.size();
+					}
+				}
+				m_usr_cb_push(request_id, data_, data_size_);
 			}
 		}
 	}

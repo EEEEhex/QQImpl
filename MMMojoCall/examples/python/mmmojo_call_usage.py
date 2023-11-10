@@ -1,141 +1,127 @@
 # -*- coding: utf-8 -*-
 
-'''
-此文件依赖protobuf包
-请先pip install protobuf==3.20.3
-'''
-import mmmojo_call
 import ctypes
 import sys
-import ocr_protobuf_pb2
-import utility_protobuf_pb2
+import json
+import base64
 
-def PyUsrReadOnPush(request_id, request_info, user_data):
-	print("[↓] PyUsrReadOnPush [RequestID: {}] :\n[".format(request_id))
-
-	pb_size = ctypes.c_int();
-	pb_data = mmmojo_call.GetPbSerializedData(request_info, pb_size);
-
-	print("\t[*] Request ID: {} | Protobuf Size: {}".format(request_id, pb_size))
-	print("\t[*] Protobuf Data: ", end="")
-
-	# 使用 ctypes 来访问和处理返回的内存内容
-	data_ = (ctypes.c_char * pb_size.value).from_address(pb_data)
-	for byte_ in data_:
-		print("0x{:02X} ".format(byte_), end="");
-
-	mmmojo_call.RemoveReadInfo(request_info);
-	print("\n]")
-
-
-def PyUsrReadOnPull(request_id, request_info, user_data):
-	print("[↓] PyUsrReadOnPull [RequestID: {}] :\n[".format(request_id))
-
-	pb_size = ctypes.c_int();
-	pb_data = mmmojo_call.GetPbSerializedData(request_info, pb_size);
-
-	print("\t[*] Request ID: {} | Protobuf Size: {}".format(request_id, pb_size))
-	print("\t[*] Protobuf Data: ", end="")
-
-	# 使用 ctypes 来访问和处理返回的内存内容
-	data_ = (ctypes.c_ubyte * pb_size.value).from_address(pb_data)
-	for byte_ in data_:
-		print("0x{:02X} ".format(byte_), end="");
-
-	mmmojo_call.RemoveReadInfo(request_info);
-	print("\n]")
-
-def PyOCRUsrReadOnPush(pic_path, pb_data, pb_size):
+def PyOCRUsrReadOnPush(pic_path, data, data_size):
 	print("[↓] OCRUsrReadOnPush:\n[")
 
-	#把void*转为python可用的数据
-	ocr_response_ubyte = (ctypes.c_ubyte*pb_size).from_address(pb_data)
-	ocr_response_array = bytearray(ocr_response_ubyte)
-
-	ocr_protobuf = ocr_protobuf_pb2.OcrResponse()
-	ocr_protobuf.ParseFromString(ocr_response_array)
-
-	print("\t[*] type:{} taskId:{} errCode:{}".format(ocr_protobuf.type, ocr_protobuf.task_id, ocr_protobuf.err_code))
-
+	# 设置了Mode的use_json为True则data为json字符串
 	if pic_path != None:
-		print("\t[*] TaskId: {} -> PicPath: {}".format(ocr_response.task_id, pic_path));
-	else:
-		print("\t[*] This is a type 1 Push that is called back only once at startup of WeChatOCR.exe", end="")
-	
-	if ocr_response.type == 0:
+		chr_ptr = ctypes.cast(data, ctypes.c_char_p)
+		json_string = chr_ptr.value.decode('utf-8')
+		json_obj = json.loads(json_string)
+
+		# 解析json
+		print("\t[*] type:{} taskId:{} errCode:{}".format(json_obj['type'], json_obj['task_id'], json_obj['err_code']))
+		print("\t[*] TaskId: {} -> PicPath: {}".format(json_obj['task_id'], pic_path.decode('utf-8')));
+
 		print("\t[*] OcrResult:\n\t[")
-		response_ocr_result = ocr_protobuf.ocr_result
-		for single_result in response_ocr_result.single_result:
-			print("\t\tRECT:[left: {}, top: {}, right: {}, bottom: {}]".format(single_result.left, single_result.top, single_result.right, single_result.bottom))
-			single_str = single_result.single_str_utf8.decode('utf-8')
-			print("\t\tUTF8STR:[{} | Rate: {}]".format(single_str, single_result.single_rate))
+		response_ocr_result = json_obj['ocr_result']
+		for single_result in response_ocr_result['single_result']:
+			print("\t\tRECT:[left: {}, top: {}, right: {}, bottom: {}]".format(single_result['left'], single_result['top'], single_result['right'], single_result['bottom']))
+			b64str = single_result['single_str_utf8']
+			single_str = base64.b64decode(b64str).decode('utf-8')
+			print("\t\tUTF8STR:[{} | Rate: {}]".format(single_str, single_result['single_rate']))
 		print("\t]", end="")
 	print("\n]")
+	
 
-def PyUtilityUsrReadOnPush(type_id, serialized_data, data_size):
+def PyUtilityUsrReadOnPush(type_id, data, data_size):
 	print("[↓] PyUtilityUsrReadOnPush [RequestID: {}] :\n[".format(type_id))
 
-	if type_id == mmmojo_call.UtilityTextScanPushResp:
-		utility_response_ubyte = (ctypes.c_ubyte*data_size).from_address(serialized_data)
-		utility_response_array = bytearray(utility_response_ubyte)
-
-		text_scan_msg = utility_protobuf_pb2.TextScanMessage()
-		text_scan_msg.ParseFromArray(utility_response_array);
-		print("\t[*] TextScanResult: ID: [{}] | PicPath: [{}] | HaveText?: [{}] | UKN0: [{}] | Rate: [{}]".format(text_scan_msg.text_scan_id, text_scan_msg.pic_path, text_scan_msg.have_text, text_scan_msg.unknown_0, text_scan_msg.rate))
+	UtilityTextScanPushResp = 10040
+	# 设置了Mode的use_json为True则data为json字符串
+	if type_id == UtilityTextScanPushResp:
+		chr_ptr = ctypes.cast(data, ctypes.c_char_p)
+		json_string = chr_ptr.value.decode('utf-8')
+		json_obj = json.loads(json_string)
+		print("\t[*] TextScanResult: ID: [{}] | PicPath: [{}] | HaveText?: [{}] | UKN0: [{}] | Rate: [{}]".format(\
+			json_obj['text_scan_id'], json_obj['pic_path'], json_obj['have_text'], json_obj['unknown_0'], json_obj['rate']))
 	print("\n]")
 
-def PyUtilityUsrReadOnPull(type_id, serialized_data, data_size):
+def PyUtilityUsrReadOnPull(type_id, data, data_size):
 	print("[↓] PyUtilityUsrReadOnPush [RequestID: {}] :\n[".format(type_id))
 
-	if type_id == mmmojo_call.UtilityInitPullResp:
+	UtilityInitPullResp = 10003
+	UtilityQRScanPullResp = 10032
+	if type_id == UtilityInitPullResp:
 		print("\t[*] UtilityInitPullResp", end="")
-	elif type_id == mmmojo_call.UtilityQRScanPullResp:
-		utility_response_ubyte = (ctypes.c_ubyte*data_size).from_address(serialized_data)
-		utility_response_array = bytearray(utility_response_ubyte)
+	elif type_id == UtilityQRScanPullResp:
+		chr_ptr = ctypes.cast(data, ctypes.c_char_p)
+		json_string = chr_ptr.value.decode('utf-8')
+		json_obj = json.loads(json_string)
 
-		qrscan_response = utility_protobuf_pb2.QRScanRespMessage()
-		qrscan_response.ParseFromArray(utility_response_array)
-
-		print("\t[*] QRScanResult UKN0: [{}] :\n\t[".format(qrscan_response.unknown_0))
-		for qrscan_result in qrscan_response.qr_result:
-			result = qrscan_result.result
-			unknown_0 = qrscan_result.unknow_0
-			unknown_1 = qrscan_result.unknown_1
-			unknown_2 = qrscan_result.unknown_2
-			unknown_3 = qrscan_result.unknown_3
-			print("t\tResult: [{}] | UKN0: [{}] | UKN1: [{}] | UKN2: [{}] |  UNK3: [{}]".format(result, unknown_0, unknown_1, unknown_2, unknown_3))
+		print("\t[*] QRScanResult UKN0: [{}] :\n\t[".format(json_obj['unknown_0']))
+		for qrscan_result in json_obj['qr_result']:
+			b64result = qrscan_result['result']
+			result = base64.b64decode(b64result).decode('utf-8')
+			unknown_0 = qrscan_result['unknow_0']
+			unknown_1 = qrscan_result['unknown_1']
+			unknown_2 = qrscan_result['unknown_2']
+			unknown_3 = qrscan_result['unknown_3']
+			print("\t\tResult: [{}] | UKN0: [{}] | UKN1: [{}] | UKN2: [{}] |  UNK3: [{}]".format(result, unknown_0, unknown_1, unknown_2, unknown_3))
 		print("\t]", end="")
 
 	print("\n]")
 
+# 调用XPluginManager::GetLastErrStr
+def call_mmmojocall_getlasterrstr(cobj_mgr):
+	call_ret = ctypes.c_ulonglong()
+	method_get_last_err_str = ctypes.c_char_p("GetLastErrStr".encode('utf-8'))
+	mmmojocall_call_func(cobj_mgr, 0, method_get_last_err_str, ctypes.byref(call_ret))
+	chr_ptr = ctypes.cast(call_ret.value, ctypes.c_char_p)
+	err_string = chr_ptr.value.decode('utf-8')
+	return err_string
 
 if __name__ == '__main__':
+	mmmojocall_dll = ctypes.cdll.LoadLibrary('./MMMojoCall.dll')
+	print('[+] LoadLibrary MMMojoCall.dll OK!')
+
+	#-------------------------
+	#以下为DLL导出函数初始化操作
+	mmmojocall_get_instance = mmmojocall_dll.GetInstanceXPluginMgr
+	mmmojocall_get_instance.argtypes = [ctypes.c_int]
+	mmmojocall_get_instance.restype = ctypes.c_void_p
+	
+	mmmojocall_call_func = mmmojocall_dll.CallFuncXPluginMgr
+	mmmojocall_call_func.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_void_p]
+	mmmojocall_call_func.restype = ctypes.c_int
+	
+	mmmojocall_release_instance = mmmojocall_dll.ReleaseInstanceXPluginMgr
+	mmmojocall_release_instance.argtypes = [ctypes.c_void_p]
+	mmmojocall_release_instance.restype = None
+
+	mmmojocall_init_dll_funcs = mmmojocall_dll.InitMMMojoDLLFuncs
+	mmmojocall_init_dll_funcs.argtypes = [ctypes.c_char_p]
+	mmmojocall_init_dll_funcs.restype = ctypes.c_bool
+
+	print('[+] Init Dll Export Funcs Over!')
+
+	#----------------------------
+	#以下为读入WeChat组件路径
 	wechat_ocr_dir = input('\033[34m[=] Enter WeChatOCR.exe Path:\n[>]\033[0m ')
 	if not wechat_ocr_dir:
-		print('WeChatOCR.exe Path can\'t be EMPTY!')
+		print('[!] WeChatOCR.exe Path can\'t be EMPTY!')
 		sys.exit(1)
+	wechat_ocr_dir_c = ctypes.c_char_p(wechat_ocr_dir.encode('utf-8'))
 
 	wechat_dir = input('\033[34m[=] Enter mmmojo(_64).dll Path:\n[>]\033[0m ')
 	if not wechat_ocr_dir:
-		print('mmmojo(_64).dll Path can\'t be EMPTY!')
+		print('[!] mmmojo(_64).dll Path can\'t be EMPTY!')
 		sys.exit(1)
+	wechat_dir_c = ctypes.c_char_p(wechat_dir.encode('utf-8'))
 
 	wechat_utility_dir = input('\033[34m[=] Enter WeChatUtility.exe Path:\n[>]\033[0m ')
 	if not wechat_ocr_dir:
-		print('WeChatUtility.exe Path can\'t be EMPTY!')
+		print('[!] WeChatUtility.exe Path can\'t be EMPTY!')
 		sys.exit(1)
-
+	wechat_utility_dir_c = ctypes.c_char_p(wechat_utility_dir.encode('utf-8'))
 
 	#-----------------------------
 	#以下为定义回调函数
-	CFUNC_PYUSRREADONPUSH = ctypes.CFUNCTYPE(None, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p)
-	py_usr_read_on_push = CFUNC_PYUSRREADONPUSH(PyUsrReadOnPush)
-	py_usr_read_on_push_void_ptr = ctypes.cast(py_usr_read_on_push, ctypes.c_void_p)
-
-	CFUNC_PYUSRREADONPULL = ctypes.CFUNCTYPE(None, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p)
-	py_usr_read_on_pull = CFUNC_PYUSRREADONPULL(PyUsrReadOnPull)
-	py_usr_read_on_pull_void_ptr = ctypes.cast(py_usr_read_on_pull, ctypes.c_void_p)
-
 	CFUNC_PYOCRUSRREADONPUSH = ctypes.CFUNCTYPE(None, ctypes.c_char_p, ctypes.c_void_p, ctypes.c_int)
 	py_ocr_usr_read_on_push = CFUNC_PYOCRUSRREADONPUSH(PyOCRUsrReadOnPush)
 
@@ -144,8 +130,6 @@ if __name__ == '__main__':
 
 	CFUNC_PYUTILITYUSRREADONPULL = ctypes.CFUNCTYPE(None, ctypes.c_int, ctypes.c_void_p, ctypes.c_int)
 	py_utility_usr_read_on_pull = CFUNC_PYUTILITYUSRREADONPULL(PyUtilityUsrReadOnPull)
-
-
 	print('\033[31m[+] Def Python Callback Funcs Over!\033[0m')
 
 	'''
@@ -153,89 +137,107 @@ if __name__ == '__main__':
 		若要启动的组件未设置"user-lib-dir"参数, 则需手动调用此函数, 
 		但若要启动的组件设置了user-lib-dir这个参数, 则在InitMMMojoEnv时会自动调用此函数.
 	'''
-	if not mmmojo_call.InitMMMojoDLLFuncs(wechat_dir):
+	if not mmmojocall_init_dll_funcs(wechat_dir_c):
 		print('\033[31m[!] mmmojocall::InitMMMojoDLLFuncs ERR!\033[0m')
 		sys.exit(1)
-
-
-	# 以下为直接使用XPluginManager类调用微信XPlugin组件(WeChatOCR)的示例
-	cobj_xlpugin_mgr = mmmojo_call.XPluginManager()
-	if not cobj_xlpugin_mgr.SetExePath(wechat_ocr_dir): # 设置XPlugin组件路径
-		print('\033[31m[!] {}\033[0m'.format(cobj_xlpugin_mgr.GetLastErrStr()))
-		sys.exit(1)
-
-	cobj_xlpugin_mgr.AppendSwitchNativeCmdLine("user-lib-dir", wechat_dir)# 添加需要的Switch命令行
-	cobj_xlpugin_mgr.SetOneCallback(mmmojo_call.kMMReadPush, py_usr_read_on_push_void_ptr.value)# 设置ReadPush回调函数
-	cobj_xlpugin_mgr.SetOneCallback(mmmojo_call.kMMReadPull, py_usr_read_on_pull_void_ptr.value)# 设置ReadPull回调函数
-	if not cobj_xlpugin_mgr.InitMMMojoEnv():# 启动环境和组件
-		print('\033[31m[!] {}\033[0m'.format(cobj_xlpugin_mgr.GetLastErrStr()))
-		sys.exit(1)
-	print("\033[31m[+] InitMMMojoEnv OK!\033[0m")
-
-	pb_hex_data = [0x10, 0x01, 0x1A, 0x0C, 0x0A, 0x0A, 0x2E, 0x5C, 0x74, 0x65, 0x73, 0x74, 0x2E, 0x70, 0x6E, 0x67]
-	input("[=] Press any key to send request...\n")# 发送请求
-	cobj_xplugin_mgr.SendPbSerializedData(pb_hex_data, len(pb_hex_data), mmmojo_call.kMMPush, False, mmmojo_call.OCRPush);
-
-	input("[=] Press any key to stop xplugin mmmojo env...\n")# 停止环境
-	cobj_xplugin_mgr.StopMMMojoEnv();
-	print("\033[31m[-] StopMMMojoEnv...\033[0m")
-
-
+	print('\033[31m[+] InitMMMojoDLLFuncs Over!\033[0m')
+	
 	#------------------------
 	#以下为使用封装好的OCRManager类调用WeChatOCR进行OCR的示例 与 UtilityManager类调用WeChatUtility扫描二维码的示例
-	cobj_ocr_mgr = mmmojo_call.OCRManager()
-	if not cobj_ocr_mgr.SetExePath(wechat_ocr_dir):
-		print('\033[31m[!] {}\033[0m'.format(cobj_ocr_mgr.GetLastErrStr()))
+	call_ret = ctypes.c_ulonglong()
+
+	mgr_type_ocr = 1
+	cobj_ocr_mgr = mmmojocall_get_instance(mgr_type_ocr)
+	
+	method_name = ctypes.c_char_p("SetExePath".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret), wechat_ocr_dir_c)
+	if not call_ret.value:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_ocr_mgr)))
 		sys.exit(1)
 	
-
-	if not cobj_ocr_mgr.SetUsrLibDir(wechat_dir):
-		print('\033[31m[!] {}\033[0m'.format(cobj_ocr_mgr.GetLastErrStr()))
+	method_name = ctypes.c_char_p("SetUsrLibDir".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret), wechat_dir_c)
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_ocr_mgr)))
 		sys.exit(1)
 
-	cobj_ocr_mgr.SetReadOnPush(py_ocr_usr_read_on_push);
-	if not cobj_ocr_mgr.StartWeChatOCR():
-		print('\033[31m[!] {}\033[0m'.format(cobj_ocr_mgr.GetLastErrStr()))
+	method_name = ctypes.c_char_p("SetCallbackDataMode".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret), True)
+
+	method_name = ctypes.c_char_p("SetReadOnPush".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret), py_ocr_usr_read_on_push)
+
+	method_name = ctypes.c_char_p("StartWeChatOCR".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret))
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_ocr_mgr)))
 		sys.exit(1)
+
 	print("\033[31m[+] StartWeChatOCR OK!\033[0m")
 
 	input("[=] Press any key to send ocr request...\n")
-	if not cobj_ocr_mgr.DoOCRTask(".\\test.png"):# 请求一次OCR 图片路径为.\\test.png
-		print('\033[31m[!] {}\033[0m'.format(cobj_ocr_mgr.GetLastErrStr()))
+	method_name = ctypes.c_char_p("DoOCRTask".encode('utf-8'))
+	pic_path_c = ctypes.c_char_p(".\\test.png".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, ctypes.byref(call_ret), pic_path_c)
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_ocr_mgr)))
 		sys.exit(1)
 
 	input("[=] Press any key to stop WeChatOCR Env...\n")
-	cobj_ocr_mgr.KillWeChatOCR();
+	method_name = ctypes.c_char_p("KillWeChatOCR".encode('utf-8'))
+	mmmojocall_call_func(cobj_ocr_mgr, mgr_type_ocr, method_name, None)
 	print("\033[31m[-] KillWeChatOCR!\033[0m")
 
+	mmmojocall_release_instance(cobj_ocr_mgr)
+
 	#QRScan
-	cobj_utility_mgr = mmmojo_call.UtilityManager()
-	if not cobj_utility_mgr.SetExePath(wechat_utility_dir):
-		print('\033[31m[!] {}\033[0m'.format(cobj_utility_mgr.GetLastErrStr()))
+	mgr_type_utility = 2
+	cobj_utility_mgr = mmmojocall_get_instance(mgr_type_utility)
+	
+	method_name = ctypes.c_char_p("SetExePath".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), wechat_utility_dir_c)
+	if not call_ret.value:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_utility_mgr)))
+		sys.exit(1)
+	
+	method_name = ctypes.c_char_p("SetUsrLibDir".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), wechat_dir_c)
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_utility_mgr)))
 		sys.exit(1)
 
-	if not cobj_utility_mgr.SetUsrLibDir(wechat_dir):
-		print('\033[31m[!] {}\033[0m'.format(cobj_utility_mgr.GetLastErrStr()))
+	method_name = ctypes.c_char_p("SetCallbackDataMode".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), True)
+
+	method_name = ctypes.c_char_p("SetReadOnPull".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), py_utility_usr_read_on_pull)
+
+	method_name = ctypes.c_char_p("SetReadOnPush".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), py_utility_usr_read_on_push)
+
+	method_name = ctypes.c_char_p("StartWeChatUtility".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret))
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_utility_mgr)))
 		sys.exit(1)
 
-	cobj_utility_mgr.SetReadOnPull(py_utility_usr_read_on_pull);
-	cobj_utility_mgr.SetReadOnPush(py_utility_usr_read_on_push);
-	if not cobj_utility_mgr.StartWeChatUtility():
-		print('\033[31m[!] {}\033[0m'.format(cobj_utility_mgr.GetLastErrStr()))
-		sys.exit(1)
 	print("\033[31m[+] StartWeChatUtility OK!\033[0m")
 
-	input("[=] Press any key to send QRScan request...\n")
-	if not cobj_utility_mgr.DoPicQRScan(".\\test.png", 0xEE):# 参数为要QRScan的图片路径 TextScan任务ID
-		print('\033[31m[!] {}\033[0m'.format(cobj_utility_mgr.GetLastErrStr()))
+	input("[=] Press any key to send OCRScan request...\n")
+	method_name = ctypes.c_char_p("DoPicQRScan".encode('utf-8'))
+	pic_path_c = ctypes.c_char_p(".\\test.png".encode('utf-8'))
+	text_scan_id = 1
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, ctypes.byref(call_ret), pic_path_c, text_scan_id)
+	if not call_ret:
+		print('\033[31m[!] {}\033[0m'.format(call_mmmojocall_getlasterrstr(cobj_utility_mgr)))
+		sys.exit(1)
 
 	input("[=] Press any key to stop WeChatUtility Env...\n")
-	cobj_utility_mgr.KillWeChatUtility();
-	print("\033[31m[-] KillWeChatUtility\033[0m")
+	method_name = ctypes.c_char_p("KillWeChatUtility".encode('utf-8'))
+	mmmojocall_call_func(cobj_utility_mgr, mgr_type_utility, method_name, None)
+	print("\033[31m[-] KillWeChatUtility!\033[0m")
 
-
-
-
+	mmmojocall_release_instance(cobj_utility_mgr)
 
 
 

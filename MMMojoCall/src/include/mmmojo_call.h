@@ -115,7 +115,7 @@ namespace qqimpl
 			/**
 			 * @brief 设置启动命令行参数 (在InitializeMMMojo中 会调用base::CommandLine::Init(argc, argv)初始化命令行参数).
 			 * @param argc 参数个数
-			 * @param argv 参数数组
+			 * @param argv 参数数组 当使用CallFuncXPluginMgr需传入const char**
 			 * @return 成功返回true
 			 */
 			bool SetCommandLine(int argc, std::vector<std::string>& argv);
@@ -129,7 +129,7 @@ namespace qqimpl
 
 			/**
 			 * @brief 设置全部回调函数.
-			 * @param callbacks 回调函数 mmmojo::common::MMMojoEnvironmentCallbacks类型			 
+			 * @param callbacks 回调函数 mmmojo::common::MMMojoEnvironmentCallbacks类型 如果是CallFuncXPluginMgr需传入结构体指针	 
 			 */
 			void SetCallbacks(mmmojo::common::MMMojoEnvironmentCallbacks callbacks);
 
@@ -170,13 +170,13 @@ namespace qqimpl
 			void SetLastErrStr(std::string err_str);
 
 		private:
-			void* m_cb_usrdata;			//回调函数的最后一个参数
-			std::string m_last_err;	//错误信息
-			std::wstring m_exe_path;	//要启动的组件路径
+			void* m_cb_usrdata;									//回调函数的最后一个参数
+			std::string m_last_err;								//错误信息
+			std::wstring m_exe_path;							//要启动的组件路径
 			std::map<std::string, std::string> m_switch_native;	//switch命令行参数
-			std::vector<std::string> m_cmdline;//启动参数
-			void* m_mmmojo_env_ptr;		//MMMojoEnv指针
-			bool m_init_mmmojo_env;		//是否启动了MMMojo环境
+			std::vector<std::string> m_cmdline;					//启动参数
+			void* m_mmmojo_env_ptr;								//MMMojoEnv指针
+			bool m_init_mmmojo_env;								//是否启动了MMMojo环境
 			mmmojo::common::MMMojoEnvironmentCallbacks m_callbacks;	//回调函数
 		};
 
@@ -208,6 +208,5 @@ namespace qqimpl
 		 * @param request_info [IN] 回调函数的参数request_info
 		 */
 		extern "C" MMMOJOCALL_API void RemoveReadInfo(const void* request_info);
-
 	}
 }

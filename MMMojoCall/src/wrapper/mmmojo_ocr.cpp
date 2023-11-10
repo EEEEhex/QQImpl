@@ -1,6 +1,8 @@
 #include "mmmojo_ocr.h"
 #include "utils.h"
 
+#include <google/protobuf/util/json_util.h>
+
 namespace qqimpl
 {
 namespace mmmojocall
@@ -42,6 +44,7 @@ namespace mmmojocall
 	{
 		m_wechatocr_running = false;
 		m_connect_state = false;
+		m_cb_data_use_json = false;
 		m_usr_callback = nullptr;
 
 		//判断是否为64位系统
@@ -156,10 +159,15 @@ namespace mmmojocall
 		return m_connect_state;
 	}
 
-	void OCRManager::CallUsrCallback(int request_id, const void* serialized_data, int data_size)
+	void OCRManager::SetCallbackDataMode(bool use_json)
+	{
+		m_cb_data_use_json = use_json;
+	}
+
+	void OCRManager::CallUsrCallback(int request_id, const void* data, int data_size)
 	{
 		ocr_protobuf::OcrResponse ocr_response;
-		ocr_response.ParseFromArray(serialized_data, data_size);
+		ocr_response.ParseFromArray(data, data_size);
 		uint32_t task_id = ocr_response.task_id();
 		uint32_t type = ocr_response.type();
 
@@ -177,7 +185,20 @@ namespace mmmojocall
 					
 				if (m_usr_callback != nullptr)
 				{
-					m_usr_callback(pic_path_ptr, serialized_data, data_size);
+					if (m_cb_data_use_json)
+					{
+						std::string json_string;
+						google::protobuf::util::JsonPrintOptions options;
+						options.add_whitespace = true;
+						options.always_print_primitive_fields = true;
+						options.preserve_proto_field_names = true;
+						MessageToJsonString(ocr_response, &json_string, options);
+						m_usr_callback(pic_path_ptr, json_string.data(), json_string.size());
+					}
+					else
+					{
+						m_usr_callback(pic_path_ptr, data, data_size);
+					}
 				}
 
 				//删除id与pic_path的map

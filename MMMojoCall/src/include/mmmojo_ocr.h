@@ -38,7 +38,7 @@ namespace mmmojocall
 		 * @param serialized_data 序列化后的数据
 		 * @param data_size 数据大小
 		 */
-		typedef void (*LPFN_OCRREADONPUSH)(const char* pic_path, const void* serialized_data, int data_size);
+		typedef void (*LPFN_OCRREADONPUSH)(const char* pic_path, const void* data, int data_size);
 
 		/**
 		 * @brief 设置接收结果的回调函数.
@@ -71,11 +71,17 @@ namespace mmmojocall
 		 */
 		void SetConnectState(bool connect);
 
-		/*
+		/**
 		 * @brief 获取连接状态
 		 * @return 是否连接上 
 		 */
 		bool GetConnectState();
+
+		/**
+		 * @brief 设置传给用户回调函数的数据类型(protobuf/json)
+		 * @param use_json 如果为true则传递json字符串, 为false则传递序列化后的pb二进制数据
+		 */
+		void SetCallbackDataMode(bool use_json);
 
 		/**
 		 * @brief 调用用户设置的回调函数.
@@ -83,7 +89,7 @@ namespace mmmojocall
 		 * @param serialized_data pb序列化后的数据
 		 * @param data_size pb数据的大小
 		 */
-		void CallUsrCallback(int request_id, const void* serialized_data, int data_size);
+		void CallUsrCallback(int request_id, const void* data, int data_size);
 
 	private:
 		bool SendOCRTask(uint32_t task_id, std::string pic_path);
@@ -102,6 +108,7 @@ namespace mmmojocall
 		bool m_wechatocr_running;			//WeChatOCR.exe是否正在运行
 		bool m_is_arch64;					//是否是64位系统
 		bool m_connect_state;
+		bool m_cb_data_use_json;			//回调函数的数据类型
 		LPFN_OCRREADONPUSH m_usr_callback;	//用户设置的获取OCR结果的回调函数
 	};
 }

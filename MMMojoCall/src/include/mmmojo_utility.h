@@ -35,7 +35,7 @@ namespace mmmojocall
 		 * @param serialized_data 序列化后的数据
 		 * @param data_size 数据大小
 		 */
-		typedef void (*LPFN_UTILITYREADONPUSHLL)(int type, const void* serialized_data, int data_size);
+		typedef void (*LPFN_UTILITYREADONPUSHLL)(int type, const void* data, int data_size);
 
 		/**
 		 * @brief 设置接收Pull结果的回调函数 (QRScan的结果是通过Pull返回).
@@ -107,6 +107,12 @@ namespace mmmojocall
 		bool GetConnectState();
 
 		/**
+		 * @brief 设置传给用户回调函数的数据类型(protobuf/json)
+		 * @param use_json 如果为true则传递json字符串, 为false则传递序列化后的pb二进制数据
+		 */
+		void SetCallbackDataMode(bool use_json);
+
+		/**
 		 * @brief 调用用户设置的回调函数.
 		 * @param request_id RequstIdUtility
 		 * @param serialized_data pb序列化后的数据
@@ -120,6 +126,7 @@ namespace mmmojocall
 		std::string m_usr_lib_dir;
 		bool m_wechatutility_running;			//WeChatUtility.exe是否正在运行
 		bool m_connect_state;
+		bool m_cb_data_use_json;
 		LPFN_UTILITYREADONPUSHLL m_usr_cb_pull;	//用户设置的获取Utility Pull结果的回调函数
 		LPFN_UTILITYREADONPUSHLL m_usr_cb_push;
 	};
