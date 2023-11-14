@@ -54,7 +54,7 @@ cmake -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_CPPEXAMPLE=ON
 ```
 如果需要使用其他语言调用, 需要加上(调用方法请查看examples文件夹)
 ```
--DBUILD_PURE_C_MODE
+-DBUILD_PURE_C_MODE=ON
 ```
 然后在build文件夹里编译生成visual studio项目即可
 
@@ -70,9 +70,9 @@ typedef enum {
   kMMShared,
 } MMMojoInfoMethod;
 ```  
-在与组件通信过程中,请求操作与回复都是通过发送 **request_id + pb数据**
-  
-其中request_id表明了请求的操作类型(具体请查看mmmojo_call.h), 例如:  
+在与组件通信过程中,请求操作与回复都是通过发送 **request_id + pb数据 + MMMojoInfoMethod**  
+其中request_id表明了请求的操作类型(比如QRScan请求), pb数据携带操作的参数, MMMojoInfoMethod表明通信方式。  
+每个XPlugin组件都有自己定义的request_id(具体请查看mmmojo_call.h), 例如:  
 (request_id 没有逆向全, 大体就是这么多了)  
 ```
 //WeChatUtility组件
