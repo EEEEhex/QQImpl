@@ -19,7 +19,7 @@
 - [x] 本地视频播放功能
 - [ ] 网络视频播放功能
 
-# 项目结构
+# 项目结构  
 ├─3rdparty  
 ├─examples  
 ├─proto  
@@ -28,20 +28,9 @@
 \ \ │  ├─mmmojo_source  
 \ \ │  ├─qq_mojoipc  
 \ \ │  └─xplugin_protobuf  
-\ \ ├─qq_mojoipc  
-\ \ └─wrapper  
-
-├─3rdparty
-├─examples
-├─proto
-└─src
-\ \ ├─include
-\ \ │  ├─mmmojo_source
-\ \ │  ├─qq_mojoipc
-\ \ │  └─xplugin_protobuf
-\ \ ├─mmmojocall
-\ \ │  └─wrapper
-\ \ └─qq_mojoipc
+\ \ ├─mmmojocall  
+\ \ │  └─wrapper  
+\ \ └─qq_mojoipc  
  
 (此版本根据微信的mmmojo源码再次重构, 逻辑更清晰)  
 其中3rdparty是编译好的libprotobuf库, examples里是调用方法的示例, proto里是WeChat与组件之间的Protobuf通信协议的定义文件。  
