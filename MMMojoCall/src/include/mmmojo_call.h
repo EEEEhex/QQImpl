@@ -74,20 +74,15 @@ namespace qqimpl
 			PlayerInfoPush = 10030,
 			PlayerErrorPlayerPush = 10031,
 			PlayerVideoSizeChangedPush = 10032,
-			PlayerUnknown0Push = 10033,
-			PlayerStatePush = 10034,	
-			PlayerUnknonw1Push = 10035,
-			PlayerUnknown2Push = 10036,
+			PlayerStopAsyncCompletedPush = 10033,
+			PlayerStateChangePush = 10034,	
+			PlayerSeekCompletedPush = 10035,
+			PlayerCompletedPush = 10036,
 			PlayerStartTaskProxyPush = 10050,
 			PlayerStartRequestProxyPush = 10051,
 			PlayerCloseRequestProxyPush = 10052,
-			PlayerPollingDatProxyPullReq = 10054				 
-		};
-
-		//小程序组件
-		enum RequestIdWMPF
-		{
-			//
+			PlayerPollingDatProxyPullReq = 10053,
+			PlayerPollingDatProxyPullResp = 10054				 
 		};
 
 		//一个类就是一个WeChat XPlugin组件
@@ -113,14 +108,6 @@ namespace qqimpl
 			bool AppendSwitchNativeCmdLine(const char* switch_string, const char* value);
 
 			/**
-			 * @brief 设置启动命令行参数 (在InitializeMMMojo中 会调用base::CommandLine::Init(argc, argv)初始化命令行参数).
-			 * @param argc 参数个数
-			 * @param argv 参数数组 当使用CallFuncXPluginMgr需传入const char**
-			 * @return 成功返回true
-			 */
-			bool SetCommandLine(int argc, std::vector<std::string>& argv);
-
-			/**
 			 * @brief 设置对应type的回调.
 			 * @param type MMMojoEnvironmentCallbackType
 			 * @param pfunc 函数指针 mmmojo::common::MMMojoReadOnPull*等类型
@@ -140,13 +127,13 @@ namespace qqimpl
 			void SetCallbackUsrData(void* usr_data);
 
 			/**
-			 * @brief 初始化MMMojo环境并启动XPlugin组件.
+			 * @brief 启动XPlugin组件.
 			 * @return 成功返回true
 			 */
-			bool InitMMMojoEnv();
+			bool StartMMMojoEnv();
 
 			/**
-			 * @brief 关闭MMMojo环境.
+			 * @brief 结束XPlugin组件.
 			 */
 			void StopMMMojoEnv();
 
@@ -174,9 +161,8 @@ namespace qqimpl
 			std::string m_last_err;								//错误信息
 			std::wstring m_exe_path;							//要启动的组件路径
 			std::map<std::string, std::string> m_switch_native;	//switch命令行参数
-			std::vector<std::string> m_cmdline;					//启动参数
 			void* m_mmmojo_env_ptr;								//MMMojoEnv指针
-			bool m_init_mmmojo_env;								//是否启动了MMMojo环境
+			bool m_start_mmmojo_env;								//是否启动了XPlugin组件
 			mmmojo::common::MMMojoEnvironmentCallbacks m_callbacks;	//回调函数
 		};
 
@@ -186,6 +172,21 @@ namespace qqimpl
 		 * @return 是否初始化成功
 		 */
 		extern "C" MMMOJOCALL_API bool InitMMMojoDLLFuncs(const char* mmmojo_dll_path);
+
+		/**
+		 * @brief 初始化全局MMMojo环境 (全局调一次) 
+		 * (如果参数中有sandbox::policy::switches::kNoSandbox switch则不会创建沙箱).
+		 * @param argc 当前进程的参数个数
+		 * @param argv 当前进程的参数
+		 * @return 是否初始化成功
+		 */
+		extern "C" MMMOJOCALL_API bool InitMMMojoGlobal(int argc, const char* const* argv);
+
+		/**
+		 * @brief 结束全局MMMojo环境 (全局调一次).
+		 * @return 是否结束成功
+		 */
+		extern "C" MMMOJOCALL_API bool ShutdownMMMojoGlobal();
 
 		/**
 		 * @brief 根据request_info获取protobuf序列化数据.

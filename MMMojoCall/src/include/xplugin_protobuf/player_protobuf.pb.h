@@ -735,25 +735,25 @@ class CreatePlayerCoreRespMessage final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUnknown0FieldNumber = 1,
-    kUnknown1FieldNumber = 2,
+    kPlayerIdFieldNumber = 1,
+    kIsSuceessFieldNumber = 2,
   };
-  // int32 unknown_0 = 1;
-  void clear_unknown_0();
-  int32_t unknown_0() const;
-  void set_unknown_0(int32_t value);
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
   private:
-  int32_t _internal_unknown_0() const;
-  void _internal_set_unknown_0(int32_t value);
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
   public:
 
-  // int32 unknown_1 = 2;
-  void clear_unknown_1();
-  int32_t unknown_1() const;
-  void set_unknown_1(int32_t value);
+  // int32 is_suceess = 2;
+  void clear_is_suceess();
+  int32_t is_suceess() const;
+  void set_is_suceess(int32_t value);
   private:
-  int32_t _internal_unknown_1() const;
-  void _internal_set_unknown_1(int32_t value);
+  int32_t _internal_is_suceess() const;
+  void _internal_set_is_suceess(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:player_protobuf.CreatePlayerCoreRespMessage)
@@ -763,8 +763,8 @@ class CreatePlayerCoreRespMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  int32_t unknown_0_;
-  int32_t unknown_1_;
+  int32_t player_id_;
+  int32_t is_suceess_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
@@ -897,14 +897,14 @@ class InitPlayerCoreMessage final :
     kMediaIdFieldNumber = 7,
     kIsLocalFieldNumber = 5,
     kIsAudioMuteFieldNumber = 8,
-    kVideoSurfaceFieldNumber = 9,
     kAudioVolumeFieldNumber = 10,
+    kVideoSurfaceFieldNumber = 9,
     kIsRepeatFieldNumber = 11,
     kSpeedRatioFieldNumber = 12,
     kMaxFrameWidthFieldNumber = 13,
     kMaxFrameHeightFieldNumber = 14,
-    kCodecTypeFieldNumber = 15,
     kDecoderTypeFieldNumber = 16,
+    kCodecTypeFieldNumber = 15,
   };
   // string file_name = 2;
   void clear_file_name();
@@ -988,15 +988,6 @@ class InitPlayerCoreMessage final :
   void _internal_set_is_audio_mute(bool value);
   public:
 
-  // int32 video_surface = 9;
-  void clear_video_surface();
-  int32_t video_surface() const;
-  void set_video_surface(int32_t value);
-  private:
-  int32_t _internal_video_surface() const;
-  void _internal_set_video_surface(int32_t value);
-  public:
-
   // float audio_volume = 10;
   void clear_audio_volume();
   float audio_volume() const;
@@ -1004,6 +995,15 @@ class InitPlayerCoreMessage final :
   private:
   float _internal_audio_volume() const;
   void _internal_set_audio_volume(float value);
+  public:
+
+  // int64 video_surface = 9;
+  void clear_video_surface();
+  int64_t video_surface() const;
+  void set_video_surface(int64_t value);
+  private:
+  int64_t _internal_video_surface() const;
+  void _internal_set_video_surface(int64_t value);
   public:
 
   // int32 is_repeat = 11;
@@ -1042,15 +1042,6 @@ class InitPlayerCoreMessage final :
   void _internal_set_max_frame_height(int32_t value);
   public:
 
-  // int32 codec_type = 15;
-  void clear_codec_type();
-  int32_t codec_type() const;
-  void set_codec_type(int32_t value);
-  private:
-  int32_t _internal_codec_type() const;
-  void _internal_set_codec_type(int32_t value);
-  public:
-
   // int64 decoder_type = 16;
   void clear_decoder_type();
   int64_t decoder_type() const;
@@ -1058,6 +1049,15 @@ class InitPlayerCoreMessage final :
   private:
   int64_t _internal_decoder_type() const;
   void _internal_set_decoder_type(int64_t value);
+  public:
+
+  // int32 codec_type = 15;
+  void clear_codec_type();
+  int32_t codec_type() const;
+  void set_codec_type(int32_t value);
+  private:
+  int32_t _internal_codec_type() const;
+  void _internal_set_codec_type(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:player_protobuf.InitPlayerCoreMessage)
@@ -1075,14 +1075,14 @@ class InitPlayerCoreMessage final :
   int64_t media_id_;
   bool is_local_;
   bool is_audio_mute_;
-  int32_t video_surface_;
   float audio_volume_;
+  int64_t video_surface_;
   int32_t is_repeat_;
   float speed_ratio_;
   int32_t max_frame_width_;
   int32_t max_frame_height_;
-  int32_t codec_type_;
   int64_t decoder_type_;
+  int32_t codec_type_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
@@ -1531,15 +1531,15 @@ class CurrentPositionMsMessage final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUnknown0FieldNumber = 1,
+    kUnknownFieldNumber = 1,
   };
-  // int32 unknown_0 = 1;
-  void clear_unknown_0();
-  int32_t unknown_0() const;
-  void set_unknown_0(int32_t value);
+  // int32 unknown = 1;
+  void clear_unknown();
+  int32_t unknown() const;
+  void set_unknown(int32_t value);
   private:
-  int32_t _internal_unknown_0() const;
-  void _internal_set_unknown_0(int32_t value);
+  int32_t _internal_unknown() const;
+  void _internal_set_unknown(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:player_protobuf.CurrentPositionMsMessage)
@@ -1549,7 +1549,7 @@ class CurrentPositionMsMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  int32_t unknown_0_;
+  int32_t unknown_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
@@ -1832,18 +1832,28 @@ class CurrentPositionMsInfo final :
   enum : int {
     kMsInfoFieldNumber = 1,
   };
-  // bytes ms_info = 1;
-  void clear_ms_info();
-  const std::string& ms_info() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_ms_info(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_ms_info();
-  PROTOBUF_NODISCARD std::string* release_ms_info();
-  void set_allocated_ms_info(std::string* ms_info);
+  // repeated bytes ms_info = 1;
+  int ms_info_size() const;
   private:
-  const std::string& _internal_ms_info() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ms_info(const std::string& value);
-  std::string* _internal_mutable_ms_info();
+  int _internal_ms_info_size() const;
+  public:
+  void clear_ms_info();
+  const std::string& ms_info(int index) const;
+  std::string* mutable_ms_info(int index);
+  void set_ms_info(int index, const std::string& value);
+  void set_ms_info(int index, std::string&& value);
+  void set_ms_info(int index, const char* value);
+  void set_ms_info(int index, const void* value, size_t size);
+  std::string* add_ms_info();
+  void add_ms_info(const std::string& value);
+  void add_ms_info(std::string&& value);
+  void add_ms_info(const char* value);
+  void add_ms_info(const void* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& ms_info() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_ms_info();
+  private:
+  const std::string& _internal_ms_info(int index) const;
+  std::string* _internal_add_ms_info();
   public:
 
   // @@protoc_insertion_point(class_scope:player_protobuf.CurrentPositionMsInfo)
@@ -1853,7 +1863,645 @@ class CurrentPositionMsInfo final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ms_info_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> ms_info_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_player_5fprotobuf_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ResizePlayerCoreMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.ResizePlayerCoreMessage) */ {
+ public:
+  inline ResizePlayerCoreMessage() : ResizePlayerCoreMessage(nullptr) {}
+  ~ResizePlayerCoreMessage() override;
+  explicit PROTOBUF_CONSTEXPR ResizePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ResizePlayerCoreMessage(const ResizePlayerCoreMessage& from);
+  ResizePlayerCoreMessage(ResizePlayerCoreMessage&& from) noexcept
+    : ResizePlayerCoreMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline ResizePlayerCoreMessage& operator=(const ResizePlayerCoreMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResizePlayerCoreMessage& operator=(ResizePlayerCoreMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ResizePlayerCoreMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ResizePlayerCoreMessage* internal_default_instance() {
+    return reinterpret_cast<const ResizePlayerCoreMessage*>(
+               &_ResizePlayerCoreMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(ResizePlayerCoreMessage& a, ResizePlayerCoreMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ResizePlayerCoreMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ResizePlayerCoreMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ResizePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ResizePlayerCoreMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ResizePlayerCoreMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const ResizePlayerCoreMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResizePlayerCoreMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "player_protobuf.ResizePlayerCoreMessage";
+  }
+  protected:
+  explicit ResizePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kNewWidthFieldNumber = 2,
+    kNewHeightFieldNumber = 3,
+  };
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 new_width = 2;
+  void clear_new_width();
+  int32_t new_width() const;
+  void set_new_width(int32_t value);
+  private:
+  int32_t _internal_new_width() const;
+  void _internal_set_new_width(int32_t value);
+  public:
+
+  // int32 new_height = 3;
+  void clear_new_height();
+  int32_t new_height() const;
+  void set_new_height(int32_t value);
+  private:
+  int32_t _internal_new_height() const;
+  void _internal_set_new_height(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:player_protobuf.ResizePlayerCoreMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t player_id_;
+  int32_t new_width_;
+  int32_t new_height_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_player_5fprotobuf_2eproto;
+};
+// -------------------------------------------------------------------
+
+class VideoSizeChangedPlayerCoreMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.VideoSizeChangedPlayerCoreMessage) */ {
+ public:
+  inline VideoSizeChangedPlayerCoreMessage() : VideoSizeChangedPlayerCoreMessage(nullptr) {}
+  ~VideoSizeChangedPlayerCoreMessage() override;
+  explicit PROTOBUF_CONSTEXPR VideoSizeChangedPlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  VideoSizeChangedPlayerCoreMessage(const VideoSizeChangedPlayerCoreMessage& from);
+  VideoSizeChangedPlayerCoreMessage(VideoSizeChangedPlayerCoreMessage&& from) noexcept
+    : VideoSizeChangedPlayerCoreMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline VideoSizeChangedPlayerCoreMessage& operator=(const VideoSizeChangedPlayerCoreMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline VideoSizeChangedPlayerCoreMessage& operator=(VideoSizeChangedPlayerCoreMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const VideoSizeChangedPlayerCoreMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const VideoSizeChangedPlayerCoreMessage* internal_default_instance() {
+    return reinterpret_cast<const VideoSizeChangedPlayerCoreMessage*>(
+               &_VideoSizeChangedPlayerCoreMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(VideoSizeChangedPlayerCoreMessage& a, VideoSizeChangedPlayerCoreMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(VideoSizeChangedPlayerCoreMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(VideoSizeChangedPlayerCoreMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  VideoSizeChangedPlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<VideoSizeChangedPlayerCoreMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const VideoSizeChangedPlayerCoreMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const VideoSizeChangedPlayerCoreMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(VideoSizeChangedPlayerCoreMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "player_protobuf.VideoSizeChangedPlayerCoreMessage";
+  }
+  protected:
+  explicit VideoSizeChangedPlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kOrgWidthFieldNumber = 2,
+    kOrgHeightFieldNumber = 3,
+  };
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 org_width = 2;
+  void clear_org_width();
+  int32_t org_width() const;
+  void set_org_width(int32_t value);
+  private:
+  int32_t _internal_org_width() const;
+  void _internal_set_org_width(int32_t value);
+  public:
+
+  // int32 org_height = 3;
+  void clear_org_height();
+  int32_t org_height() const;
+  void set_org_height(int32_t value);
+  private:
+  int32_t _internal_org_height() const;
+  void _internal_set_org_height(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:player_protobuf.VideoSizeChangedPlayerCoreMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t player_id_;
+  int32_t org_width_;
+  int32_t org_height_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_player_5fprotobuf_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PreparePlayerCoreMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.PreparePlayerCoreMessage) */ {
+ public:
+  inline PreparePlayerCoreMessage() : PreparePlayerCoreMessage(nullptr) {}
+  ~PreparePlayerCoreMessage() override;
+  explicit PROTOBUF_CONSTEXPR PreparePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PreparePlayerCoreMessage(const PreparePlayerCoreMessage& from);
+  PreparePlayerCoreMessage(PreparePlayerCoreMessage&& from) noexcept
+    : PreparePlayerCoreMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline PreparePlayerCoreMessage& operator=(const PreparePlayerCoreMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PreparePlayerCoreMessage& operator=(PreparePlayerCoreMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PreparePlayerCoreMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PreparePlayerCoreMessage* internal_default_instance() {
+    return reinterpret_cast<const PreparePlayerCoreMessage*>(
+               &_PreparePlayerCoreMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(PreparePlayerCoreMessage& a, PreparePlayerCoreMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PreparePlayerCoreMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PreparePlayerCoreMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PreparePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PreparePlayerCoreMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PreparePlayerCoreMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const PreparePlayerCoreMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PreparePlayerCoreMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "player_protobuf.PreparePlayerCoreMessage";
+  }
+  protected:
+  explicit PreparePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kDurationFieldNumber = 2,
+  };
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 duration = 2;
+  void clear_duration();
+  int32_t duration() const;
+  void set_duration(int32_t value);
+  private:
+  int32_t _internal_duration() const;
+  void _internal_set_duration(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:player_protobuf.PreparePlayerCoreMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t player_id_;
+  int32_t duration_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_player_5fprotobuf_2eproto;
+};
+// -------------------------------------------------------------------
+
+class StatePlayerCoreMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.StatePlayerCoreMessage) */ {
+ public:
+  inline StatePlayerCoreMessage() : StatePlayerCoreMessage(nullptr) {}
+  ~StatePlayerCoreMessage() override;
+  explicit PROTOBUF_CONSTEXPR StatePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  StatePlayerCoreMessage(const StatePlayerCoreMessage& from);
+  StatePlayerCoreMessage(StatePlayerCoreMessage&& from) noexcept
+    : StatePlayerCoreMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline StatePlayerCoreMessage& operator=(const StatePlayerCoreMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StatePlayerCoreMessage& operator=(StatePlayerCoreMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const StatePlayerCoreMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const StatePlayerCoreMessage* internal_default_instance() {
+    return reinterpret_cast<const StatePlayerCoreMessage*>(
+               &_StatePlayerCoreMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(StatePlayerCoreMessage& a, StatePlayerCoreMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(StatePlayerCoreMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StatePlayerCoreMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  StatePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<StatePlayerCoreMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const StatePlayerCoreMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const StatePlayerCoreMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StatePlayerCoreMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "player_protobuf.StatePlayerCoreMessage";
+  }
+  protected:
+  explicit StatePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kStateFieldNumber = 2,
+  };
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 state = 2;
+  void clear_state();
+  int32_t state() const;
+  void set_state(int32_t value);
+  private:
+  int32_t _internal_state() const;
+  void _internal_set_state(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:player_protobuf.StatePlayerCoreMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t player_id_;
+  int32_t state_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
@@ -1907,7 +2555,7 @@ class AudioMutePlayerCoreMessage final :
                &_AudioMutePlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    14;
 
   friend void swap(AudioMutePlayerCoreMessage& a, AudioMutePlayerCoreMessage& b) {
     a.Swap(&b);
@@ -2061,7 +2709,7 @@ class SeekToPlayerCoreMessage final :
                &_SeekToPlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    15;
 
   friend void swap(SeekToPlayerCoreMessage& a, SeekToPlayerCoreMessage& b) {
     a.Swap(&b);
@@ -2215,7 +2863,7 @@ class VideoSurfaceMessage final :
                &_VideoSurfaceMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    16;
 
   friend void swap(VideoSurfaceMessage& a, VideoSurfaceMessage& b) {
     a.Swap(&b);
@@ -2369,7 +3017,7 @@ class AudioVolumePlayerCoreMessage final :
                &_AudioVolumePlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    17;
 
   friend void swap(AudioVolumePlayerCoreMessage& a, AudioVolumePlayerCoreMessage& b) {
     a.Swap(&b);
@@ -2523,7 +3171,7 @@ class RepeatPlayerCoreMessage final :
                &_RepeatPlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    18;
 
   friend void swap(RepeatPlayerCoreMessage& a, RepeatPlayerCoreMessage& b) {
     a.Swap(&b);
@@ -2629,171 +3277,6 @@ class RepeatPlayerCoreMessage final :
 };
 // -------------------------------------------------------------------
 
-class ResizePlayerCoreMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.ResizePlayerCoreMessage) */ {
- public:
-  inline ResizePlayerCoreMessage() : ResizePlayerCoreMessage(nullptr) {}
-  ~ResizePlayerCoreMessage() override;
-  explicit PROTOBUF_CONSTEXPR ResizePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  ResizePlayerCoreMessage(const ResizePlayerCoreMessage& from);
-  ResizePlayerCoreMessage(ResizePlayerCoreMessage&& from) noexcept
-    : ResizePlayerCoreMessage() {
-    *this = ::std::move(from);
-  }
-
-  inline ResizePlayerCoreMessage& operator=(const ResizePlayerCoreMessage& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResizePlayerCoreMessage& operator=(ResizePlayerCoreMessage&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResizePlayerCoreMessage& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const ResizePlayerCoreMessage* internal_default_instance() {
-    return reinterpret_cast<const ResizePlayerCoreMessage*>(
-               &_ResizePlayerCoreMessage_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    15;
-
-  friend void swap(ResizePlayerCoreMessage& a, ResizePlayerCoreMessage& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(ResizePlayerCoreMessage* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResizePlayerCoreMessage* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResizePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<ResizePlayerCoreMessage>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const ResizePlayerCoreMessage& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const ResizePlayerCoreMessage& from);
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(ResizePlayerCoreMessage* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "player_protobuf.ResizePlayerCoreMessage";
-  }
-  protected:
-  explicit ResizePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kPlayerIdFieldNumber = 1,
-    kNewWidthFieldNumber = 2,
-    kNewHeightFieldNumber = 3,
-  };
-  // int32 player_id = 1;
-  void clear_player_id();
-  int32_t player_id() const;
-  void set_player_id(int32_t value);
-  private:
-  int32_t _internal_player_id() const;
-  void _internal_set_player_id(int32_t value);
-  public:
-
-  // int32 new_width = 2;
-  void clear_new_width();
-  int32_t new_width() const;
-  void set_new_width(int32_t value);
-  private:
-  int32_t _internal_new_width() const;
-  void _internal_set_new_width(int32_t value);
-  public:
-
-  // int32 new_height = 3;
-  void clear_new_height();
-  int32_t new_height() const;
-  void set_new_height(int32_t value);
-  private:
-  int32_t _internal_new_height() const;
-  void _internal_set_new_height(int32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:player_protobuf.ResizePlayerCoreMessage)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  int32_t player_id_;
-  int32_t new_width_;
-  int32_t new_height_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_player_5fprotobuf_2eproto;
-};
-// -------------------------------------------------------------------
-
 class SpeedRatioPlayerCoreMessage final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.SpeedRatioPlayerCoreMessage) */ {
  public:
@@ -2842,7 +3325,7 @@ class SpeedRatioPlayerCoreMessage final :
                &_SpeedRatioPlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    19;
 
   friend void swap(SpeedRatioPlayerCoreMessage& a, SpeedRatioPlayerCoreMessage& b) {
     a.Swap(&b);
@@ -2996,7 +3479,7 @@ class ReadyDataSourceCoreMessage final :
                &_ReadyDataSourceCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    20;
 
   friend void swap(ReadyDataSourceCoreMessage& a, ReadyDataSourceCoreMessage& b) {
     a.Swap(&b);
@@ -3182,7 +3665,7 @@ class DownloadDataSourceCoreMessage final :
                &_DownloadDataSourceCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    21;
 
   friend void swap(DownloadDataSourceCoreMessage& a, DownloadDataSourceCoreMessage& b) {
     a.Swap(&b);
@@ -3331,126 +3814,11 @@ class DownloadDataSourceCoreMessage final :
 };
 // -------------------------------------------------------------------
 
-class PreparePlayerCoreMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.PreparePlayerCoreMessage) */ {
- public:
-  inline PreparePlayerCoreMessage() : PreparePlayerCoreMessage(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR PreparePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  PreparePlayerCoreMessage(const PreparePlayerCoreMessage& from);
-  PreparePlayerCoreMessage(PreparePlayerCoreMessage&& from) noexcept
-    : PreparePlayerCoreMessage() {
-    *this = ::std::move(from);
-  }
-
-  inline PreparePlayerCoreMessage& operator=(const PreparePlayerCoreMessage& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline PreparePlayerCoreMessage& operator=(PreparePlayerCoreMessage&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const PreparePlayerCoreMessage& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const PreparePlayerCoreMessage* internal_default_instance() {
-    return reinterpret_cast<const PreparePlayerCoreMessage*>(
-               &_PreparePlayerCoreMessage_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    19;
-
-  friend void swap(PreparePlayerCoreMessage& a, PreparePlayerCoreMessage& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(PreparePlayerCoreMessage* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(PreparePlayerCoreMessage* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  PreparePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<PreparePlayerCoreMessage>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const PreparePlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const PreparePlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
-  public:
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "player_protobuf.PreparePlayerCoreMessage";
-  }
-  protected:
-  explicit PreparePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:player_protobuf.PreparePlayerCoreMessage)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  friend struct ::TableStruct_player_5fprotobuf_2eproto;
-};
-// -------------------------------------------------------------------
-
 class ErrorPlayerCoreMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.ErrorPlayerCoreMessage) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.ErrorPlayerCoreMessage) */ {
  public:
   inline ErrorPlayerCoreMessage() : ErrorPlayerCoreMessage(nullptr) {}
+  ~ErrorPlayerCoreMessage() override;
   explicit PROTOBUF_CONSTEXPR ErrorPlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   ErrorPlayerCoreMessage(const ErrorPlayerCoreMessage& from);
@@ -3494,7 +3862,7 @@ class ErrorPlayerCoreMessage final :
                &_ErrorPlayerCoreMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(ErrorPlayerCoreMessage& a, ErrorPlayerCoreMessage& b) {
     a.Swap(&b);
@@ -3523,15 +3891,27 @@ class ErrorPlayerCoreMessage final :
   ErrorPlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<ErrorPlayerCoreMessage>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const ErrorPlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const ErrorPlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ErrorPlayerCoreMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const ErrorPlayerCoreMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ErrorPlayerCoreMessage* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -3552,6 +3932,53 @@ class ErrorPlayerCoreMessage final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kErrorFieldNumber = 2,
+    kPlayerIdFieldNumber = 1,
+    kErrorTypeFieldNumber = 3,
+    kErrorCodeFieldNumber = 4,
+  };
+  // string error = 2;
+  void clear_error();
+  const std::string& error() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_error(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_error();
+  PROTOBUF_NODISCARD std::string* release_error();
+  void set_allocated_error(std::string* error);
+  private:
+  const std::string& _internal_error() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_error(const std::string& value);
+  std::string* _internal_mutable_error();
+  public:
+
+  // int32 player_id = 1;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 error_type = 3;
+  void clear_error_type();
+  int32_t error_type() const;
+  void set_error_type(int32_t value);
+  private:
+  int32_t _internal_error_type() const;
+  void _internal_set_error_type(int32_t value);
+  public:
+
+  // int32 error_code = 4;
+  void clear_error_code();
+  int32_t error_code() const;
+  void set_error_code(int32_t value);
+  private:
+  int32_t _internal_error_code() const;
+  void _internal_set_error_code(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:player_protobuf.ErrorPlayerCoreMessage)
  private:
   class _Internal;
@@ -3559,246 +3986,20 @@ class ErrorPlayerCoreMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  friend struct ::TableStruct_player_5fprotobuf_2eproto;
-};
-// -------------------------------------------------------------------
-
-class VideoSizeChangedPlayerCoreMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.VideoSizeChangedPlayerCoreMessage) */ {
- public:
-  inline VideoSizeChangedPlayerCoreMessage() : VideoSizeChangedPlayerCoreMessage(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR VideoSizeChangedPlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  VideoSizeChangedPlayerCoreMessage(const VideoSizeChangedPlayerCoreMessage& from);
-  VideoSizeChangedPlayerCoreMessage(VideoSizeChangedPlayerCoreMessage&& from) noexcept
-    : VideoSizeChangedPlayerCoreMessage() {
-    *this = ::std::move(from);
-  }
-
-  inline VideoSizeChangedPlayerCoreMessage& operator=(const VideoSizeChangedPlayerCoreMessage& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline VideoSizeChangedPlayerCoreMessage& operator=(VideoSizeChangedPlayerCoreMessage&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const VideoSizeChangedPlayerCoreMessage& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const VideoSizeChangedPlayerCoreMessage* internal_default_instance() {
-    return reinterpret_cast<const VideoSizeChangedPlayerCoreMessage*>(
-               &_VideoSizeChangedPlayerCoreMessage_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    21;
-
-  friend void swap(VideoSizeChangedPlayerCoreMessage& a, VideoSizeChangedPlayerCoreMessage& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(VideoSizeChangedPlayerCoreMessage* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(VideoSizeChangedPlayerCoreMessage* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  VideoSizeChangedPlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<VideoSizeChangedPlayerCoreMessage>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const VideoSizeChangedPlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const VideoSizeChangedPlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
-  public:
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "player_protobuf.VideoSizeChangedPlayerCoreMessage";
-  }
-  protected:
-  explicit VideoSizeChangedPlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:player_protobuf.VideoSizeChangedPlayerCoreMessage)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  friend struct ::TableStruct_player_5fprotobuf_2eproto;
-};
-// -------------------------------------------------------------------
-
-class StatePlayerCoreMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.StatePlayerCoreMessage) */ {
- public:
-  inline StatePlayerCoreMessage() : StatePlayerCoreMessage(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR StatePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  StatePlayerCoreMessage(const StatePlayerCoreMessage& from);
-  StatePlayerCoreMessage(StatePlayerCoreMessage&& from) noexcept
-    : StatePlayerCoreMessage() {
-    *this = ::std::move(from);
-  }
-
-  inline StatePlayerCoreMessage& operator=(const StatePlayerCoreMessage& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline StatePlayerCoreMessage& operator=(StatePlayerCoreMessage&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const StatePlayerCoreMessage& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const StatePlayerCoreMessage* internal_default_instance() {
-    return reinterpret_cast<const StatePlayerCoreMessage*>(
-               &_StatePlayerCoreMessage_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    22;
-
-  friend void swap(StatePlayerCoreMessage& a, StatePlayerCoreMessage& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(StatePlayerCoreMessage* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(StatePlayerCoreMessage* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  StatePlayerCoreMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<StatePlayerCoreMessage>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const StatePlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const StatePlayerCoreMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
-  public:
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "player_protobuf.StatePlayerCoreMessage";
-  }
-  protected:
-  explicit StatePlayerCoreMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:player_protobuf.StatePlayerCoreMessage)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr error_;
+  int32_t player_id_;
+  int32_t error_type_;
+  int32_t error_code_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
 // -------------------------------------------------------------------
 
 class StartTaskProxyMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.StartTaskProxyMessage) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.StartTaskProxyMessage) */ {
  public:
   inline StartTaskProxyMessage() : StartTaskProxyMessage(nullptr) {}
+  ~StartTaskProxyMessage() override;
   explicit PROTOBUF_CONSTEXPR StartTaskProxyMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   StartTaskProxyMessage(const StartTaskProxyMessage& from);
@@ -3871,15 +4072,27 @@ class StartTaskProxyMessage final :
   StartTaskProxyMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<StartTaskProxyMessage>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const StartTaskProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const StartTaskProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const StartTaskProxyMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const StartTaskProxyMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StartTaskProxyMessage* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -3900,6 +4113,28 @@ class StartTaskProxyMessage final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTaskIdFieldNumber = 1,
+    kPlayerIdFieldNumber = 2,
+  };
+  // int32 task_id = 1;
+  void clear_task_id();
+  int32_t task_id() const;
+  void set_task_id(int32_t value);
+  private:
+  int32_t _internal_task_id() const;
+  void _internal_set_task_id(int32_t value);
+  public:
+
+  // int32 player_id = 2;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:player_protobuf.StartTaskProxyMessage)
  private:
   class _Internal;
@@ -3907,14 +4142,18 @@ class StartTaskProxyMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t task_id_;
+  int32_t player_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
 // -------------------------------------------------------------------
 
 class StartRequestProxyMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.StartRequestProxyMessage) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.StartRequestProxyMessage) */ {
  public:
   inline StartRequestProxyMessage() : StartRequestProxyMessage(nullptr) {}
+  ~StartRequestProxyMessage() override;
   explicit PROTOBUF_CONSTEXPR StartRequestProxyMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   StartRequestProxyMessage(const StartRequestProxyMessage& from);
@@ -3987,15 +4226,27 @@ class StartRequestProxyMessage final :
   StartRequestProxyMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<StartRequestProxyMessage>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const StartRequestProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const StartRequestProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const StartRequestProxyMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const StartRequestProxyMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StartRequestProxyMessage* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -4016,6 +4267,48 @@ class StartRequestProxyMessage final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTaskIdFieldNumber = 1,
+    kPlayerIdFieldNumber = 2,
+    kRequestStartFieldNumber = 3,
+    kRequestEndFieldNumber = 4,
+  };
+  // int32 task_id = 1;
+  void clear_task_id();
+  int32_t task_id() const;
+  void set_task_id(int32_t value);
+  private:
+  int32_t _internal_task_id() const;
+  void _internal_set_task_id(int32_t value);
+  public:
+
+  // int32 player_id = 2;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 request_start = 3;
+  void clear_request_start();
+  int32_t request_start() const;
+  void set_request_start(int32_t value);
+  private:
+  int32_t _internal_request_start() const;
+  void _internal_set_request_start(int32_t value);
+  public:
+
+  // int32 request_end = 4;
+  void clear_request_end();
+  int32_t request_end() const;
+  void set_request_end(int32_t value);
+  private:
+  int32_t _internal_request_end() const;
+  void _internal_set_request_end(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:player_protobuf.StartRequestProxyMessage)
  private:
   class _Internal;
@@ -4023,14 +4316,20 @@ class StartRequestProxyMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t task_id_;
+  int32_t player_id_;
+  int32_t request_start_;
+  int32_t request_end_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
 // -------------------------------------------------------------------
 
 class CloseRequestProxyMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.CloseRequestProxyMessage) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.CloseRequestProxyMessage) */ {
  public:
   inline CloseRequestProxyMessage() : CloseRequestProxyMessage(nullptr) {}
+  ~CloseRequestProxyMessage() override;
   explicit PROTOBUF_CONSTEXPR CloseRequestProxyMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   CloseRequestProxyMessage(const CloseRequestProxyMessage& from);
@@ -4103,15 +4402,27 @@ class CloseRequestProxyMessage final :
   CloseRequestProxyMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<CloseRequestProxyMessage>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const CloseRequestProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const CloseRequestProxyMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CloseRequestProxyMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const CloseRequestProxyMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CloseRequestProxyMessage* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -4132,6 +4443,28 @@ class CloseRequestProxyMessage final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTaskIdFieldNumber = 1,
+    kPlayerIdFieldNumber = 2,
+  };
+  // int32 task_id = 1;
+  void clear_task_id();
+  int32_t task_id() const;
+  void set_task_id(int32_t value);
+  private:
+  int32_t _internal_task_id() const;
+  void _internal_set_task_id(int32_t value);
+  public:
+
+  // int32 player_id = 2;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:player_protobuf.CloseRequestProxyMessage)
  private:
   class _Internal;
@@ -4139,14 +4472,18 @@ class CloseRequestProxyMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t task_id_;
+  int32_t player_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
 // -------------------------------------------------------------------
 
 class PollingDataProxyReqMessage final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:player_protobuf.PollingDataProxyReqMessage) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:player_protobuf.PollingDataProxyReqMessage) */ {
  public:
   inline PollingDataProxyReqMessage() : PollingDataProxyReqMessage(nullptr) {}
+  ~PollingDataProxyReqMessage() override;
   explicit PROTOBUF_CONSTEXPR PollingDataProxyReqMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   PollingDataProxyReqMessage(const PollingDataProxyReqMessage& from);
@@ -4219,15 +4556,27 @@ class PollingDataProxyReqMessage final :
   PollingDataProxyReqMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<PollingDataProxyReqMessage>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const PollingDataProxyReqMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const PollingDataProxyReqMessage& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PollingDataProxyReqMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const PollingDataProxyReqMessage& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PollingDataProxyReqMessage* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -4248,6 +4597,68 @@ class PollingDataProxyReqMessage final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTaskIdFieldNumber = 1,
+    kPlayerIdFieldNumber = 2,
+    kOffsetFieldNumber = 3,
+    kReadySizeFieldNumber = 4,
+    kDownloadSizeFieldNumber = 5,
+    kReadSizeFieldNumber = 6,
+  };
+  // int32 task_id = 1;
+  void clear_task_id();
+  int32_t task_id() const;
+  void set_task_id(int32_t value);
+  private:
+  int32_t _internal_task_id() const;
+  void _internal_set_task_id(int32_t value);
+  public:
+
+  // int32 player_id = 2;
+  void clear_player_id();
+  int32_t player_id() const;
+  void set_player_id(int32_t value);
+  private:
+  int32_t _internal_player_id() const;
+  void _internal_set_player_id(int32_t value);
+  public:
+
+  // int32 offset = 3;
+  void clear_offset();
+  int32_t offset() const;
+  void set_offset(int32_t value);
+  private:
+  int32_t _internal_offset() const;
+  void _internal_set_offset(int32_t value);
+  public:
+
+  // int32 ready_size = 4;
+  void clear_ready_size();
+  int32_t ready_size() const;
+  void set_ready_size(int32_t value);
+  private:
+  int32_t _internal_ready_size() const;
+  void _internal_set_ready_size(int32_t value);
+  public:
+
+  // int32 download_size = 5;
+  void clear_download_size();
+  int32_t download_size() const;
+  void set_download_size(int32_t value);
+  private:
+  int32_t _internal_download_size() const;
+  void _internal_set_download_size(int32_t value);
+  public:
+
+  // int32 read_size = 6;
+  void clear_read_size();
+  int32_t read_size() const;
+  void set_read_size(int32_t value);
+  private:
+  int32_t _internal_read_size() const;
+  void _internal_set_read_size(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:player_protobuf.PollingDataProxyReqMessage)
  private:
   class _Internal;
@@ -4255,6 +4666,13 @@ class PollingDataProxyReqMessage final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t task_id_;
+  int32_t player_id_;
+  int32_t offset_;
+  int32_t ready_size_;
+  int32_t download_size_;
+  int32_t read_size_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_player_5fprotobuf_2eproto;
 };
 // -------------------------------------------------------------------
@@ -4496,44 +4914,44 @@ inline void CreatePlayerCoreReqMessage::set_is_post_frame(int32_t value) {
 
 // CreatePlayerCoreRespMessage
 
-// int32 unknown_0 = 1;
-inline void CreatePlayerCoreRespMessage::clear_unknown_0() {
-  unknown_0_ = 0;
+// int32 player_id = 1;
+inline void CreatePlayerCoreRespMessage::clear_player_id() {
+  player_id_ = 0;
 }
-inline int32_t CreatePlayerCoreRespMessage::_internal_unknown_0() const {
-  return unknown_0_;
+inline int32_t CreatePlayerCoreRespMessage::_internal_player_id() const {
+  return player_id_;
 }
-inline int32_t CreatePlayerCoreRespMessage::unknown_0() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.CreatePlayerCoreRespMessage.unknown_0)
-  return _internal_unknown_0();
+inline int32_t CreatePlayerCoreRespMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CreatePlayerCoreRespMessage.player_id)
+  return _internal_player_id();
 }
-inline void CreatePlayerCoreRespMessage::_internal_set_unknown_0(int32_t value) {
+inline void CreatePlayerCoreRespMessage::_internal_set_player_id(int32_t value) {
   
-  unknown_0_ = value;
+  player_id_ = value;
 }
-inline void CreatePlayerCoreRespMessage::set_unknown_0(int32_t value) {
-  _internal_set_unknown_0(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.CreatePlayerCoreRespMessage.unknown_0)
+inline void CreatePlayerCoreRespMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CreatePlayerCoreRespMessage.player_id)
 }
 
-// int32 unknown_1 = 2;
-inline void CreatePlayerCoreRespMessage::clear_unknown_1() {
-  unknown_1_ = 0;
+// int32 is_suceess = 2;
+inline void CreatePlayerCoreRespMessage::clear_is_suceess() {
+  is_suceess_ = 0;
 }
-inline int32_t CreatePlayerCoreRespMessage::_internal_unknown_1() const {
-  return unknown_1_;
+inline int32_t CreatePlayerCoreRespMessage::_internal_is_suceess() const {
+  return is_suceess_;
 }
-inline int32_t CreatePlayerCoreRespMessage::unknown_1() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.CreatePlayerCoreRespMessage.unknown_1)
-  return _internal_unknown_1();
+inline int32_t CreatePlayerCoreRespMessage::is_suceess() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CreatePlayerCoreRespMessage.is_suceess)
+  return _internal_is_suceess();
 }
-inline void CreatePlayerCoreRespMessage::_internal_set_unknown_1(int32_t value) {
+inline void CreatePlayerCoreRespMessage::_internal_set_is_suceess(int32_t value) {
   
-  unknown_1_ = value;
+  is_suceess_ = value;
 }
-inline void CreatePlayerCoreRespMessage::set_unknown_1(int32_t value) {
-  _internal_set_unknown_1(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.CreatePlayerCoreRespMessage.unknown_1)
+inline void CreatePlayerCoreRespMessage::set_is_suceess(int32_t value) {
+  _internal_set_is_suceess(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CreatePlayerCoreRespMessage.is_suceess)
 }
 
 // -------------------------------------------------------------------
@@ -4760,22 +5178,22 @@ inline void InitPlayerCoreMessage::set_is_audio_mute(bool value) {
   // @@protoc_insertion_point(field_set:player_protobuf.InitPlayerCoreMessage.is_audio_mute)
 }
 
-// int32 video_surface = 9;
+// int64 video_surface = 9;
 inline void InitPlayerCoreMessage::clear_video_surface() {
-  video_surface_ = 0;
+  video_surface_ = int64_t{0};
 }
-inline int32_t InitPlayerCoreMessage::_internal_video_surface() const {
+inline int64_t InitPlayerCoreMessage::_internal_video_surface() const {
   return video_surface_;
 }
-inline int32_t InitPlayerCoreMessage::video_surface() const {
+inline int64_t InitPlayerCoreMessage::video_surface() const {
   // @@protoc_insertion_point(field_get:player_protobuf.InitPlayerCoreMessage.video_surface)
   return _internal_video_surface();
 }
-inline void InitPlayerCoreMessage::_internal_set_video_surface(int32_t value) {
+inline void InitPlayerCoreMessage::_internal_set_video_surface(int64_t value) {
   
   video_surface_ = value;
 }
-inline void InitPlayerCoreMessage::set_video_surface(int32_t value) {
+inline void InitPlayerCoreMessage::set_video_surface(int64_t value) {
   _internal_set_video_surface(value);
   // @@protoc_insertion_point(field_set:player_protobuf.InitPlayerCoreMessage.video_surface)
 }
@@ -5062,24 +5480,24 @@ inline void PlayerIdMessage::set_player_id(int32_t value) {
 
 // CurrentPositionMsMessage
 
-// int32 unknown_0 = 1;
-inline void CurrentPositionMsMessage::clear_unknown_0() {
-  unknown_0_ = 0;
+// int32 unknown = 1;
+inline void CurrentPositionMsMessage::clear_unknown() {
+  unknown_ = 0;
 }
-inline int32_t CurrentPositionMsMessage::_internal_unknown_0() const {
-  return unknown_0_;
+inline int32_t CurrentPositionMsMessage::_internal_unknown() const {
+  return unknown_;
 }
-inline int32_t CurrentPositionMsMessage::unknown_0() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.CurrentPositionMsMessage.unknown_0)
-  return _internal_unknown_0();
+inline int32_t CurrentPositionMsMessage::unknown() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CurrentPositionMsMessage.unknown)
+  return _internal_unknown();
 }
-inline void CurrentPositionMsMessage::_internal_set_unknown_0(int32_t value) {
+inline void CurrentPositionMsMessage::_internal_set_unknown(int32_t value) {
   
-  unknown_0_ = value;
+  unknown_ = value;
 }
-inline void CurrentPositionMsMessage::set_unknown_0(int32_t value) {
-  _internal_set_unknown_0(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.CurrentPositionMsMessage.unknown_0)
+inline void CurrentPositionMsMessage::set_unknown(int32_t value) {
+  _internal_set_unknown(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CurrentPositionMsMessage.unknown)
 }
 
 // -------------------------------------------------------------------
@@ -5130,54 +5548,295 @@ inline void CurrentPositionMsInfo_MsInfo::set_pos(int32_t value) {
 
 // CurrentPositionMsInfo
 
-// bytes ms_info = 1;
+// repeated bytes ms_info = 1;
+inline int CurrentPositionMsInfo::_internal_ms_info_size() const {
+  return ms_info_.size();
+}
+inline int CurrentPositionMsInfo::ms_info_size() const {
+  return _internal_ms_info_size();
+}
 inline void CurrentPositionMsInfo::clear_ms_info() {
-  ms_info_.ClearToEmpty();
+  ms_info_.Clear();
 }
-inline const std::string& CurrentPositionMsInfo::ms_info() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.CurrentPositionMsInfo.ms_info)
-  return _internal_ms_info();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CurrentPositionMsInfo::set_ms_info(ArgT0&& arg0, ArgT... args) {
- 
- ms_info_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:player_protobuf.CurrentPositionMsInfo.ms_info)
-}
-inline std::string* CurrentPositionMsInfo::mutable_ms_info() {
-  std::string* _s = _internal_mutable_ms_info();
-  // @@protoc_insertion_point(field_mutable:player_protobuf.CurrentPositionMsInfo.ms_info)
+inline std::string* CurrentPositionMsInfo::add_ms_info() {
+  std::string* _s = _internal_add_ms_info();
+  // @@protoc_insertion_point(field_add_mutable:player_protobuf.CurrentPositionMsInfo.ms_info)
   return _s;
 }
-inline const std::string& CurrentPositionMsInfo::_internal_ms_info() const {
-  return ms_info_.Get();
+inline const std::string& CurrentPositionMsInfo::_internal_ms_info(int index) const {
+  return ms_info_.Get(index);
 }
-inline void CurrentPositionMsInfo::_internal_set_ms_info(const std::string& value) {
+inline const std::string& CurrentPositionMsInfo::ms_info(int index) const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CurrentPositionMsInfo.ms_info)
+  return _internal_ms_info(index);
+}
+inline std::string* CurrentPositionMsInfo::mutable_ms_info(int index) {
+  // @@protoc_insertion_point(field_mutable:player_protobuf.CurrentPositionMsInfo.ms_info)
+  return ms_info_.Mutable(index);
+}
+inline void CurrentPositionMsInfo::set_ms_info(int index, const std::string& value) {
+  ms_info_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::set_ms_info(int index, std::string&& value) {
+  ms_info_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::set_ms_info(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  ms_info_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::set_ms_info(int index, const void* value, size_t size) {
+  ms_info_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline std::string* CurrentPositionMsInfo::_internal_add_ms_info() {
+  return ms_info_.Add();
+}
+inline void CurrentPositionMsInfo::add_ms_info(const std::string& value) {
+  ms_info_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::add_ms_info(std::string&& value) {
+  ms_info_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::add_ms_info(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  ms_info_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline void CurrentPositionMsInfo::add_ms_info(const void* value, size_t size) {
+  ms_info_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:player_protobuf.CurrentPositionMsInfo.ms_info)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+CurrentPositionMsInfo::ms_info() const {
+  // @@protoc_insertion_point(field_list:player_protobuf.CurrentPositionMsInfo.ms_info)
+  return ms_info_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+CurrentPositionMsInfo::mutable_ms_info() {
+  // @@protoc_insertion_point(field_mutable_list:player_protobuf.CurrentPositionMsInfo.ms_info)
+  return &ms_info_;
+}
+
+// -------------------------------------------------------------------
+
+// ResizePlayerCoreMessage
+
+// int32 player_id = 1;
+inline void ResizePlayerCoreMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t ResizePlayerCoreMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t ResizePlayerCoreMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.player_id)
+  return _internal_player_id();
+}
+inline void ResizePlayerCoreMessage::_internal_set_player_id(int32_t value) {
   
-  ms_info_.Set(value, GetArenaForAllocation());
+  player_id_ = value;
 }
-inline std::string* CurrentPositionMsInfo::_internal_mutable_ms_info() {
+inline void ResizePlayerCoreMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.player_id)
+}
+
+// int32 new_width = 2;
+inline void ResizePlayerCoreMessage::clear_new_width() {
+  new_width_ = 0;
+}
+inline int32_t ResizePlayerCoreMessage::_internal_new_width() const {
+  return new_width_;
+}
+inline int32_t ResizePlayerCoreMessage::new_width() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.new_width)
+  return _internal_new_width();
+}
+inline void ResizePlayerCoreMessage::_internal_set_new_width(int32_t value) {
   
-  return ms_info_.Mutable(GetArenaForAllocation());
+  new_width_ = value;
 }
-inline std::string* CurrentPositionMsInfo::release_ms_info() {
-  // @@protoc_insertion_point(field_release:player_protobuf.CurrentPositionMsInfo.ms_info)
-  return ms_info_.Release();
+inline void ResizePlayerCoreMessage::set_new_width(int32_t value) {
+  _internal_set_new_width(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.new_width)
 }
-inline void CurrentPositionMsInfo::set_allocated_ms_info(std::string* ms_info) {
-  if (ms_info != nullptr) {
-    
-  } else {
-    
-  }
-  ms_info_.SetAllocated(ms_info, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (ms_info_.IsDefault()) {
-    ms_info_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:player_protobuf.CurrentPositionMsInfo.ms_info)
+
+// int32 new_height = 3;
+inline void ResizePlayerCoreMessage::clear_new_height() {
+  new_height_ = 0;
+}
+inline int32_t ResizePlayerCoreMessage::_internal_new_height() const {
+  return new_height_;
+}
+inline int32_t ResizePlayerCoreMessage::new_height() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.new_height)
+  return _internal_new_height();
+}
+inline void ResizePlayerCoreMessage::_internal_set_new_height(int32_t value) {
+  
+  new_height_ = value;
+}
+inline void ResizePlayerCoreMessage::set_new_height(int32_t value) {
+  _internal_set_new_height(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.new_height)
+}
+
+// -------------------------------------------------------------------
+
+// VideoSizeChangedPlayerCoreMessage
+
+// int32 player_id = 1;
+inline void VideoSizeChangedPlayerCoreMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.VideoSizeChangedPlayerCoreMessage.player_id)
+  return _internal_player_id();
+}
+inline void VideoSizeChangedPlayerCoreMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void VideoSizeChangedPlayerCoreMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.VideoSizeChangedPlayerCoreMessage.player_id)
+}
+
+// int32 org_width = 2;
+inline void VideoSizeChangedPlayerCoreMessage::clear_org_width() {
+  org_width_ = 0;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::_internal_org_width() const {
+  return org_width_;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::org_width() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.VideoSizeChangedPlayerCoreMessage.org_width)
+  return _internal_org_width();
+}
+inline void VideoSizeChangedPlayerCoreMessage::_internal_set_org_width(int32_t value) {
+  
+  org_width_ = value;
+}
+inline void VideoSizeChangedPlayerCoreMessage::set_org_width(int32_t value) {
+  _internal_set_org_width(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.VideoSizeChangedPlayerCoreMessage.org_width)
+}
+
+// int32 org_height = 3;
+inline void VideoSizeChangedPlayerCoreMessage::clear_org_height() {
+  org_height_ = 0;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::_internal_org_height() const {
+  return org_height_;
+}
+inline int32_t VideoSizeChangedPlayerCoreMessage::org_height() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.VideoSizeChangedPlayerCoreMessage.org_height)
+  return _internal_org_height();
+}
+inline void VideoSizeChangedPlayerCoreMessage::_internal_set_org_height(int32_t value) {
+  
+  org_height_ = value;
+}
+inline void VideoSizeChangedPlayerCoreMessage::set_org_height(int32_t value) {
+  _internal_set_org_height(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.VideoSizeChangedPlayerCoreMessage.org_height)
+}
+
+// -------------------------------------------------------------------
+
+// PreparePlayerCoreMessage
+
+// int32 player_id = 1;
+inline void PreparePlayerCoreMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t PreparePlayerCoreMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t PreparePlayerCoreMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PreparePlayerCoreMessage.player_id)
+  return _internal_player_id();
+}
+inline void PreparePlayerCoreMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void PreparePlayerCoreMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PreparePlayerCoreMessage.player_id)
+}
+
+// int32 duration = 2;
+inline void PreparePlayerCoreMessage::clear_duration() {
+  duration_ = 0;
+}
+inline int32_t PreparePlayerCoreMessage::_internal_duration() const {
+  return duration_;
+}
+inline int32_t PreparePlayerCoreMessage::duration() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PreparePlayerCoreMessage.duration)
+  return _internal_duration();
+}
+inline void PreparePlayerCoreMessage::_internal_set_duration(int32_t value) {
+  
+  duration_ = value;
+}
+inline void PreparePlayerCoreMessage::set_duration(int32_t value) {
+  _internal_set_duration(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PreparePlayerCoreMessage.duration)
+}
+
+// -------------------------------------------------------------------
+
+// StatePlayerCoreMessage
+
+// int32 player_id = 1;
+inline void StatePlayerCoreMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t StatePlayerCoreMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t StatePlayerCoreMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StatePlayerCoreMessage.player_id)
+  return _internal_player_id();
+}
+inline void StatePlayerCoreMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void StatePlayerCoreMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StatePlayerCoreMessage.player_id)
+}
+
+// int32 state = 2;
+inline void StatePlayerCoreMessage::clear_state() {
+  state_ = 0;
+}
+inline int32_t StatePlayerCoreMessage::_internal_state() const {
+  return state_;
+}
+inline int32_t StatePlayerCoreMessage::state() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StatePlayerCoreMessage.state)
+  return _internal_state();
+}
+inline void StatePlayerCoreMessage::_internal_set_state(int32_t value) {
+  
+  state_ = value;
+}
+inline void StatePlayerCoreMessage::set_state(int32_t value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StatePlayerCoreMessage.state)
 }
 
 // -------------------------------------------------------------------
@@ -5398,70 +6057,6 @@ inline void RepeatPlayerCoreMessage::_internal_set_is_repeat(int32_t value) {
 inline void RepeatPlayerCoreMessage::set_is_repeat(int32_t value) {
   _internal_set_is_repeat(value);
   // @@protoc_insertion_point(field_set:player_protobuf.RepeatPlayerCoreMessage.is_repeat)
-}
-
-// -------------------------------------------------------------------
-
-// ResizePlayerCoreMessage
-
-// int32 player_id = 1;
-inline void ResizePlayerCoreMessage::clear_player_id() {
-  player_id_ = 0;
-}
-inline int32_t ResizePlayerCoreMessage::_internal_player_id() const {
-  return player_id_;
-}
-inline int32_t ResizePlayerCoreMessage::player_id() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.player_id)
-  return _internal_player_id();
-}
-inline void ResizePlayerCoreMessage::_internal_set_player_id(int32_t value) {
-  
-  player_id_ = value;
-}
-inline void ResizePlayerCoreMessage::set_player_id(int32_t value) {
-  _internal_set_player_id(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.player_id)
-}
-
-// int32 new_width = 2;
-inline void ResizePlayerCoreMessage::clear_new_width() {
-  new_width_ = 0;
-}
-inline int32_t ResizePlayerCoreMessage::_internal_new_width() const {
-  return new_width_;
-}
-inline int32_t ResizePlayerCoreMessage::new_width() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.new_width)
-  return _internal_new_width();
-}
-inline void ResizePlayerCoreMessage::_internal_set_new_width(int32_t value) {
-  
-  new_width_ = value;
-}
-inline void ResizePlayerCoreMessage::set_new_width(int32_t value) {
-  _internal_set_new_width(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.new_width)
-}
-
-// int32 new_height = 3;
-inline void ResizePlayerCoreMessage::clear_new_height() {
-  new_height_ = 0;
-}
-inline int32_t ResizePlayerCoreMessage::_internal_new_height() const {
-  return new_height_;
-}
-inline int32_t ResizePlayerCoreMessage::new_height() const {
-  // @@protoc_insertion_point(field_get:player_protobuf.ResizePlayerCoreMessage.new_height)
-  return _internal_new_height();
-}
-inline void ResizePlayerCoreMessage::_internal_set_new_height(int32_t value) {
-  
-  new_height_ = value;
-}
-inline void ResizePlayerCoreMessage::set_new_height(int32_t value) {
-  _internal_set_new_height(value);
-  // @@protoc_insertion_point(field_set:player_protobuf.ResizePlayerCoreMessage.new_height)
 }
 
 // -------------------------------------------------------------------
@@ -5818,35 +6413,413 @@ inline void DownloadDataSourceCoreMessage::set_media_id(int64_t value) {
 
 // -------------------------------------------------------------------
 
-// PreparePlayerCoreMessage
-
-// -------------------------------------------------------------------
-
 // ErrorPlayerCoreMessage
 
-// -------------------------------------------------------------------
+// int32 player_id = 1;
+inline void ErrorPlayerCoreMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t ErrorPlayerCoreMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t ErrorPlayerCoreMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ErrorPlayerCoreMessage.player_id)
+  return _internal_player_id();
+}
+inline void ErrorPlayerCoreMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void ErrorPlayerCoreMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ErrorPlayerCoreMessage.player_id)
+}
 
-// VideoSizeChangedPlayerCoreMessage
+// string error = 2;
+inline void ErrorPlayerCoreMessage::clear_error() {
+  error_.ClearToEmpty();
+}
+inline const std::string& ErrorPlayerCoreMessage::error() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ErrorPlayerCoreMessage.error)
+  return _internal_error();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ErrorPlayerCoreMessage::set_error(ArgT0&& arg0, ArgT... args) {
+ 
+ error_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:player_protobuf.ErrorPlayerCoreMessage.error)
+}
+inline std::string* ErrorPlayerCoreMessage::mutable_error() {
+  std::string* _s = _internal_mutable_error();
+  // @@protoc_insertion_point(field_mutable:player_protobuf.ErrorPlayerCoreMessage.error)
+  return _s;
+}
+inline const std::string& ErrorPlayerCoreMessage::_internal_error() const {
+  return error_.Get();
+}
+inline void ErrorPlayerCoreMessage::_internal_set_error(const std::string& value) {
+  
+  error_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ErrorPlayerCoreMessage::_internal_mutable_error() {
+  
+  return error_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ErrorPlayerCoreMessage::release_error() {
+  // @@protoc_insertion_point(field_release:player_protobuf.ErrorPlayerCoreMessage.error)
+  return error_.Release();
+}
+inline void ErrorPlayerCoreMessage::set_allocated_error(std::string* error) {
+  if (error != nullptr) {
+    
+  } else {
+    
+  }
+  error_.SetAllocated(error, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (error_.IsDefault()) {
+    error_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:player_protobuf.ErrorPlayerCoreMessage.error)
+}
 
-// -------------------------------------------------------------------
+// int32 error_type = 3;
+inline void ErrorPlayerCoreMessage::clear_error_type() {
+  error_type_ = 0;
+}
+inline int32_t ErrorPlayerCoreMessage::_internal_error_type() const {
+  return error_type_;
+}
+inline int32_t ErrorPlayerCoreMessage::error_type() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ErrorPlayerCoreMessage.error_type)
+  return _internal_error_type();
+}
+inline void ErrorPlayerCoreMessage::_internal_set_error_type(int32_t value) {
+  
+  error_type_ = value;
+}
+inline void ErrorPlayerCoreMessage::set_error_type(int32_t value) {
+  _internal_set_error_type(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ErrorPlayerCoreMessage.error_type)
+}
 
-// StatePlayerCoreMessage
+// int32 error_code = 4;
+inline void ErrorPlayerCoreMessage::clear_error_code() {
+  error_code_ = 0;
+}
+inline int32_t ErrorPlayerCoreMessage::_internal_error_code() const {
+  return error_code_;
+}
+inline int32_t ErrorPlayerCoreMessage::error_code() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.ErrorPlayerCoreMessage.error_code)
+  return _internal_error_code();
+}
+inline void ErrorPlayerCoreMessage::_internal_set_error_code(int32_t value) {
+  
+  error_code_ = value;
+}
+inline void ErrorPlayerCoreMessage::set_error_code(int32_t value) {
+  _internal_set_error_code(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.ErrorPlayerCoreMessage.error_code)
+}
 
 // -------------------------------------------------------------------
 
 // StartTaskProxyMessage
 
+// int32 task_id = 1;
+inline void StartTaskProxyMessage::clear_task_id() {
+  task_id_ = 0;
+}
+inline int32_t StartTaskProxyMessage::_internal_task_id() const {
+  return task_id_;
+}
+inline int32_t StartTaskProxyMessage::task_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartTaskProxyMessage.task_id)
+  return _internal_task_id();
+}
+inline void StartTaskProxyMessage::_internal_set_task_id(int32_t value) {
+  
+  task_id_ = value;
+}
+inline void StartTaskProxyMessage::set_task_id(int32_t value) {
+  _internal_set_task_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartTaskProxyMessage.task_id)
+}
+
+// int32 player_id = 2;
+inline void StartTaskProxyMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t StartTaskProxyMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t StartTaskProxyMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartTaskProxyMessage.player_id)
+  return _internal_player_id();
+}
+inline void StartTaskProxyMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void StartTaskProxyMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartTaskProxyMessage.player_id)
+}
+
 // -------------------------------------------------------------------
 
 // StartRequestProxyMessage
+
+// int32 task_id = 1;
+inline void StartRequestProxyMessage::clear_task_id() {
+  task_id_ = 0;
+}
+inline int32_t StartRequestProxyMessage::_internal_task_id() const {
+  return task_id_;
+}
+inline int32_t StartRequestProxyMessage::task_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartRequestProxyMessage.task_id)
+  return _internal_task_id();
+}
+inline void StartRequestProxyMessage::_internal_set_task_id(int32_t value) {
+  
+  task_id_ = value;
+}
+inline void StartRequestProxyMessage::set_task_id(int32_t value) {
+  _internal_set_task_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartRequestProxyMessage.task_id)
+}
+
+// int32 player_id = 2;
+inline void StartRequestProxyMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t StartRequestProxyMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t StartRequestProxyMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartRequestProxyMessage.player_id)
+  return _internal_player_id();
+}
+inline void StartRequestProxyMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void StartRequestProxyMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartRequestProxyMessage.player_id)
+}
+
+// int32 request_start = 3;
+inline void StartRequestProxyMessage::clear_request_start() {
+  request_start_ = 0;
+}
+inline int32_t StartRequestProxyMessage::_internal_request_start() const {
+  return request_start_;
+}
+inline int32_t StartRequestProxyMessage::request_start() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartRequestProxyMessage.request_start)
+  return _internal_request_start();
+}
+inline void StartRequestProxyMessage::_internal_set_request_start(int32_t value) {
+  
+  request_start_ = value;
+}
+inline void StartRequestProxyMessage::set_request_start(int32_t value) {
+  _internal_set_request_start(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartRequestProxyMessage.request_start)
+}
+
+// int32 request_end = 4;
+inline void StartRequestProxyMessage::clear_request_end() {
+  request_end_ = 0;
+}
+inline int32_t StartRequestProxyMessage::_internal_request_end() const {
+  return request_end_;
+}
+inline int32_t StartRequestProxyMessage::request_end() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.StartRequestProxyMessage.request_end)
+  return _internal_request_end();
+}
+inline void StartRequestProxyMessage::_internal_set_request_end(int32_t value) {
+  
+  request_end_ = value;
+}
+inline void StartRequestProxyMessage::set_request_end(int32_t value) {
+  _internal_set_request_end(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.StartRequestProxyMessage.request_end)
+}
 
 // -------------------------------------------------------------------
 
 // CloseRequestProxyMessage
 
+// int32 task_id = 1;
+inline void CloseRequestProxyMessage::clear_task_id() {
+  task_id_ = 0;
+}
+inline int32_t CloseRequestProxyMessage::_internal_task_id() const {
+  return task_id_;
+}
+inline int32_t CloseRequestProxyMessage::task_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CloseRequestProxyMessage.task_id)
+  return _internal_task_id();
+}
+inline void CloseRequestProxyMessage::_internal_set_task_id(int32_t value) {
+  
+  task_id_ = value;
+}
+inline void CloseRequestProxyMessage::set_task_id(int32_t value) {
+  _internal_set_task_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CloseRequestProxyMessage.task_id)
+}
+
+// int32 player_id = 2;
+inline void CloseRequestProxyMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t CloseRequestProxyMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t CloseRequestProxyMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.CloseRequestProxyMessage.player_id)
+  return _internal_player_id();
+}
+inline void CloseRequestProxyMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void CloseRequestProxyMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.CloseRequestProxyMessage.player_id)
+}
+
 // -------------------------------------------------------------------
 
 // PollingDataProxyReqMessage
+
+// int32 task_id = 1;
+inline void PollingDataProxyReqMessage::clear_task_id() {
+  task_id_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_task_id() const {
+  return task_id_;
+}
+inline int32_t PollingDataProxyReqMessage::task_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.task_id)
+  return _internal_task_id();
+}
+inline void PollingDataProxyReqMessage::_internal_set_task_id(int32_t value) {
+  
+  task_id_ = value;
+}
+inline void PollingDataProxyReqMessage::set_task_id(int32_t value) {
+  _internal_set_task_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.task_id)
+}
+
+// int32 player_id = 2;
+inline void PollingDataProxyReqMessage::clear_player_id() {
+  player_id_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_player_id() const {
+  return player_id_;
+}
+inline int32_t PollingDataProxyReqMessage::player_id() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.player_id)
+  return _internal_player_id();
+}
+inline void PollingDataProxyReqMessage::_internal_set_player_id(int32_t value) {
+  
+  player_id_ = value;
+}
+inline void PollingDataProxyReqMessage::set_player_id(int32_t value) {
+  _internal_set_player_id(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.player_id)
+}
+
+// int32 offset = 3;
+inline void PollingDataProxyReqMessage::clear_offset() {
+  offset_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_offset() const {
+  return offset_;
+}
+inline int32_t PollingDataProxyReqMessage::offset() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.offset)
+  return _internal_offset();
+}
+inline void PollingDataProxyReqMessage::_internal_set_offset(int32_t value) {
+  
+  offset_ = value;
+}
+inline void PollingDataProxyReqMessage::set_offset(int32_t value) {
+  _internal_set_offset(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.offset)
+}
+
+// int32 ready_size = 4;
+inline void PollingDataProxyReqMessage::clear_ready_size() {
+  ready_size_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_ready_size() const {
+  return ready_size_;
+}
+inline int32_t PollingDataProxyReqMessage::ready_size() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.ready_size)
+  return _internal_ready_size();
+}
+inline void PollingDataProxyReqMessage::_internal_set_ready_size(int32_t value) {
+  
+  ready_size_ = value;
+}
+inline void PollingDataProxyReqMessage::set_ready_size(int32_t value) {
+  _internal_set_ready_size(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.ready_size)
+}
+
+// int32 download_size = 5;
+inline void PollingDataProxyReqMessage::clear_download_size() {
+  download_size_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_download_size() const {
+  return download_size_;
+}
+inline int32_t PollingDataProxyReqMessage::download_size() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.download_size)
+  return _internal_download_size();
+}
+inline void PollingDataProxyReqMessage::_internal_set_download_size(int32_t value) {
+  
+  download_size_ = value;
+}
+inline void PollingDataProxyReqMessage::set_download_size(int32_t value) {
+  _internal_set_download_size(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.download_size)
+}
+
+// int32 read_size = 6;
+inline void PollingDataProxyReqMessage::clear_read_size() {
+  read_size_ = 0;
+}
+inline int32_t PollingDataProxyReqMessage::_internal_read_size() const {
+  return read_size_;
+}
+inline int32_t PollingDataProxyReqMessage::read_size() const {
+  // @@protoc_insertion_point(field_get:player_protobuf.PollingDataProxyReqMessage.read_size)
+  return _internal_read_size();
+}
+inline void PollingDataProxyReqMessage::_internal_set_read_size(int32_t value) {
+  
+  read_size_ = value;
+}
+inline void PollingDataProxyReqMessage::set_read_size(int32_t value) {
+  _internal_set_read_size(value);
+  // @@protoc_insertion_point(field_set:player_protobuf.PollingDataProxyReqMessage.read_size)
+}
 
 // -------------------------------------------------------------------
 

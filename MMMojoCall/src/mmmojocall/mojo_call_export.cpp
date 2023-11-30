@@ -1,9 +1,12 @@
+#include <Windows.h>
+
 #include "mojo_call_export.h"
 #include "mmmojo_call.h"
 
 #ifdef USE_WRAPPER
 #include "mmmojo_ocr.h"
 #include "mmmojo_utility.h"
+#include "mmmojo_player.h"
 #endif
 
 #ifdef PURE_C_MODE
@@ -24,6 +27,9 @@ const void* GetInstanceXPluginMgr(int mgr_type)
 	case 2:
 		ret_ptr = new mmmojocall::UtilityManager();
 		break;
+	case 3:
+		ret_ptr = new mmmojocall::PlayerManager();
+		break;
 #endif
 	default:
 		break;
@@ -40,7 +46,7 @@ int CallFuncXPluginMgr(const void* class_ptr, int mgr_type, const char* func_nam
 	va_list p_args;
 	va_start(p_args, ret_ptr);
 
-	mmmojocall::XPluginManager* mgr_ptr = (mmmojocall::OCRManager*)class_ptr;
+	mmmojocall::XPluginManager* mgr_ptr = (mmmojocall::XPluginManager*)class_ptr;
 
 	std::string func_name_string = func_name;
 	if (func_name_string == "SetExePath")
@@ -54,18 +60,6 @@ int CallFuncXPluginMgr(const void* class_ptr, int mgr_type, const char* func_nam
 		const char* arg_switch_string = va_arg(p_args, const char*);
 		const char* arg_value = va_arg(p_args, const char*);
 		bool bRet = mgr_ptr->AppendSwitchNativeCmdLine(arg_switch_string, arg_value);
-		if (ret_ptr != NULL) *((DWORD_PTR*)ret_ptr) = bRet;
-	}
-	else if (func_name_string == "SetCommandLine")
-	{
-		int arg_argc = va_arg(p_args, int);
-		const char** arg_argv = va_arg(p_args, const char**);
-
-		std::vector<std::string> argv;
-		for (size_t i = 0; i < arg_argc; i++)
-			argv.push_back(arg_argv[i]);
-
-		bool bRet = mgr_ptr->SetCommandLine(arg_argc, argv);
 		if (ret_ptr != NULL) *((DWORD_PTR*)ret_ptr) = bRet;
 	}
 	else if (func_name_string == "SetOneCallback")
@@ -87,7 +81,7 @@ int CallFuncXPluginMgr(const void* class_ptr, int mgr_type, const char* func_nam
 	}
 	else if (func_name_string == "InitMMMojoEnv")
 	{
-		bool bRet = mgr_ptr->InitMMMojoEnv();
+		bool bRet = mgr_ptr->StartMMMojoEnv();
 		if (ret_ptr != NULL) *((DWORD_PTR*)ret_ptr) = bRet;
 	}
 	else if (func_name_string == "StopMMMojoEnv")
@@ -195,6 +189,10 @@ int CallFuncXPluginMgr(const void* class_ptr, int mgr_type, const char* func_nam
 			bool arg_use_json = va_arg(p_args, int);
 			utility_mgr_ptr->SetCallbackDataMode(arg_use_json);
 		}
+	}
+	else if (mgr_type == MGRTYPE::PlayerManager)
+	{
+		//TODO: 看看有没有办法可以反射调用, 这样写太麻烦了
 	}
 #endif
 

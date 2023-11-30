@@ -98,6 +98,13 @@ if __name__ == '__main__':
 	mmmojocall_init_dll_funcs.argtypes = [ctypes.c_char_p]
 	mmmojocall_init_dll_funcs.restype = ctypes.c_bool
 
+	mmmojocall_init_mmmojo_global_func = mmmojocall_dll.InitMMMojoGlobal
+	mmmojocall_init_mmmojo_global_func.argtypes = [ctypes.c_int, ctypes.c_char_p]
+	mmmojocall_init_mmmojo_global_func.restype = ctypes.c_bool
+
+	mmmojocall_shutdown_mmmojo_global_func = mmmojocall_dll.ShutdownMMMojoGlobal
+	mmmojocall_shutdown_mmmojo_global_func.restype = ctypes.c_bool
+
 	print('[+] Init Dll Export Funcs Over!')
 
 	#----------------------------
@@ -133,15 +140,16 @@ if __name__ == '__main__':
 	print('\033[31m[+] Def Python Callback Funcs Over!\033[0m')
 
 	'''
-	[可选] 加载mmmojo(_64).dll并获取导出函数, 只需要调用一次.	
-		若要启动的组件未设置"user-lib-dir"参数, 则需手动调用此函数, 
-		但若要启动的组件设置了user-lib-dir这个参数, 则在InitMMMojoEnv时会自动调用此函数.
+		加载mmmojo(_64).dll并获取导出函数, 只需要调用一次.	
 	'''
 	if not mmmojocall_init_dll_funcs(wechat_dir_c):
 		print('\033[31m[!] mmmojocall::InitMMMojoDLLFuncs ERR!\033[0m')
 		sys.exit(1)
 	print('\033[31m[+] InitMMMojoDLLFuncs Over!\033[0m')
 	
+	# 初始化MMMojo (包括ThreadPool等), 只需要调用一次.	
+	mmmojocall_init_mmmojo_global_func(0, None);
+
 	#------------------------
 	#以下为使用封装好的OCRManager类调用WeChatOCR进行OCR的示例 与 UtilityManager类调用WeChatUtility扫描二维码的示例
 	call_ret = ctypes.c_ulonglong()
@@ -239,5 +247,6 @@ if __name__ == '__main__':
 
 	mmmojocall_release_instance(cobj_utility_mgr)
 
+	mmmojocall_shutdown_mmmojo_global_func()
 
 

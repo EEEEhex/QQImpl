@@ -10,7 +10,8 @@ enum MGRTYPE
 {
 	XPluginManager = 0,
 	OCRManager,
-	UtilityManager
+	UtilityManager,
+	PlayerManager
 };
 
 /**

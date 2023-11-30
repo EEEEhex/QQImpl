@@ -95,7 +95,7 @@ namespace mmmojocall
 		//设置回调函数的data为此类指针
 		__super::SetCallbackUsrData(this);
 
-		bool bRet = __super::InitMMMojoEnv();
+		bool bRet = __super::StartMMMojoEnv();
 		m_wechatocr_running = bRet;
 		return bRet;
 	}

@@ -10,14 +10,15 @@ project (MMMojoCall LANGUAGES CXX VERSION 2.0.0)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # set up option variable for cmake
-option(XPLUGIN_WRAPPER "Enable this to build the OCR and Utility Wrapper Code" ON)
+option(XPLUGIN_WRAPPER "Enable this to build the OCR/Utility/Player Wrapper Code" ON)
 option(BUILD_QQIPC "Enable this to build the QQ Mojo IPC code" OFF)
 option(BUILD_CPPEXAMPLE "Enable this to build the c++ usage example" OFF)
-option(EXAMPLE_USE_JSON "Example Codde's callback function data using protobuf or json" ON)
+option(EXAMPLE_USE_JSON "Example Code's callback function data using protobuf or json" ON)
 option(BUILD_PURE_C_MODE "Export Pure C Interface" OFF)
 
 # add mmmojo_call src file
 aux_source_directory(src SRC_FILES)
+aux_source_directory(src/mmmojocall SRC_FILES)
 
 # add xplugin wrapper src file
 if (XPLUGIN_WRAPPER)
@@ -30,7 +31,7 @@ if (XPLUGIN_WRAPPER)
 		message(FATAL_ERROR "the google protobuf header file is not exist!")
 	endif()
 
-	aux_source_directory(src/wrapper SRC_FILES)
+	aux_source_directory(src/mmmojocall/wrapper SRC_FILES)
 endif()
 
 # add qq mojo ipc src file
@@ -96,25 +97,68 @@ if (BUILD_CPPEXAMPLE)
 		add_definitions(-DEXAMPLE_USE_JSON)
 	endif()
 
+	# add xplugin (without wrapper) example
 	set(XPLUGIN_USAGE xplugin_test)
 	set(XPLUGIN_USAGE_SRC examples/cpp/xplugin_test.cpp)
-	if (XPLUGIN_WRAPPER AND NOT EXAMPLE_USE_JSON)
-		list(APPEND XPLUGIN_USAGE_SRC src/wrapper/ocr_protobuf.pb.cc)
-		list(APPEND XPLUGIN_USAGE_SRC src/wrapper/utility_protobuf.pb.cc)
-	endif()
-
 	add_executable(${XPLUGIN_USAGE} ${XPLUGIN_USAGE_SRC})
 	set_property(TARGET ${XPLUGIN_USAGE} PROPERTY FOLDER "EXAMPLE")
-
 	set_target_properties(${XPLUGIN_USAGE} PROPERTIES
 		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
 		DEBUG_POSTFIX _d)
-
 	add_dependencies(${XPLUGIN_USAGE} ${PROJECT_NAME})
-	
 	target_link_libraries(${XPLUGIN_USAGE} PRIVATE $(SolutionDir)$<IF:$<CONFIG:Debug>,Debug,Release>/${PROJECT_NAME}$<$<CONFIG:Debug>:_d>.lib)
-	if (XPLUGIN_WRAPPER AND NOT EXAMPLE_USE_JSON)	
-		target_link_libraries(${XPLUGIN_USAGE} PRIVATE ${CMAKE_SOURCE_DIR}/3rdparty/libprotobuf_${ARCH_SUFFIX}_MT$<$<CONFIG:Debug>:d>.lib)
+
+	# add xplugin wrapper example
+	if (XPLUGIN_WRAPPER)
+		#OCR TEST
+		set(XPLUGIN_OCR_USAGE xplugin_ocr_test)
+		set(XPLUGIN_OCR_USAGE_SRC examples/cpp/xplugin_ocr_test.cpp)
+
+		if (NOT EXAMPLE_USE_JSON)
+			list(APPEND XPLUGIN_OCR_USAGE_SRC src/mmmojocall/wrapper/ocr_protobuf.pb.cc)
+		endif()
+		
+		add_executable(${XPLUGIN_OCR_USAGE} ${XPLUGIN_OCR_USAGE_SRC})
+		set_property(TARGET ${XPLUGIN_OCR_USAGE} PROPERTY FOLDER "EXAMPLE")
+		set_target_properties(${XPLUGIN_OCR_USAGE} PROPERTIES
+			MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+			DEBUG_POSTFIX _d)
+		add_dependencies(${XPLUGIN_OCR_USAGE} ${PROJECT_NAME})
+		target_link_libraries(${XPLUGIN_OCR_USAGE} PRIVATE $(SolutionDir)$<IF:$<CONFIG:Debug>,Debug,Release>/${PROJECT_NAME}$<$<CONFIG:Debug>:_d>.lib)
+		if (NOT EXAMPLE_USE_JSON)
+			target_link_libraries(${XPLUGIN_OCR_USAGE} PRIVATE ${CMAKE_SOURCE_DIR}/3rdparty/libprotobuf_${ARCH_SUFFIX}_MT$<$<CONFIG:Debug>:d>.lib)
+		endif()
+
+		#UTILITY TEST
+		set(XPLUGIN_UTILITY_USAGE xplugin_utility_test)
+		set(XPLUGIN_UTILITY_USAGE_SRC examples/cpp/xplugin_utility_test.cpp)
+		
+		if (NOT EXAMPLE_USE_JSON)
+			list(APPEND XPLUGIN_UTILITY_USAGE_SRC src/mmmojocall/wrapper/utility_protobuf.pb.cc)
+		endif()
+
+		add_executable(${XPLUGIN_UTILITY_USAGE} ${XPLUGIN_UTILITY_USAGE_SRC})
+		set_property(TARGET ${XPLUGIN_UTILITY_USAGE} PROPERTY FOLDER "EXAMPLE")
+		set_target_properties(${XPLUGIN_UTILITY_USAGE} PROPERTIES
+			MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+			DEBUG_POSTFIX _d)
+		add_dependencies(${XPLUGIN_UTILITY_USAGE} ${PROJECT_NAME})
+		target_link_libraries(${XPLUGIN_UTILITY_USAGE} PRIVATE $(SolutionDir)$<IF:$<CONFIG:Debug>,Debug,Release>/${PROJECT_NAME}$<$<CONFIG:Debug>:_d>.lib)
+		if (NOT EXAMPLE_USE_JSON)
+			target_link_libraries(${XPLUGIN_UTILITY_USAGE} PRIVATE ${CMAKE_SOURCE_DIR}/3rdparty/libprotobuf_${ARCH_SUFFIX}_MT$<$<CONFIG:Debug>:d>.lib)
+		endif()
+
+		#PLAYER TEST
+		set(XPLUGIN_PLAYER_USAGE xplugin_player_test)
+		set(XPLUGIN_PLAYER_USAGE_SRC examples/cpp/xplugin_player_test.cpp)
+
+		add_executable(${XPLUGIN_PLAYER_USAGE} ${XPLUGIN_PLAYER_USAGE_SRC})
+		set_property(TARGET ${XPLUGIN_PLAYER_USAGE} PROPERTY FOLDER "EXAMPLE")
+		set_target_properties(${XPLUGIN_PLAYER_USAGE} PROPERTIES
+			MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+			DEBUG_POSTFIX _d)
+		add_dependencies(${XPLUGIN_PLAYER_USAGE} ${PROJECT_NAME})
+		target_link_libraries(${XPLUGIN_PLAYER_USAGE} PRIVATE $(SolutionDir)$<IF:$<CONFIG:Debug>,Debug,Release>/${PROJECT_NAME}$<$<CONFIG:Debug>:_d>.lib)
 	endif()
 
 	if (BUILD_QQIPC)
