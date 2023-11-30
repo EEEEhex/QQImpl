@@ -28,14 +28,23 @@
 \ \ │  ├─mmmojo_source  
 \ \ │  ├─qq_mojoipc  
 \ \ │  └─xplugin_protobuf  
+<<<<<<< HEAD
 \ \ ├─mmmojocall  
 \ \ │  └─wrapper  
 \ \ └─qq_mojoipc  
+=======
+\ \ ├─qq_mojoipc  
+\ \ └─wrapper  
+>>>>>>> 1a48e09b4568bd7700176d1d043645ffbf7dc286
  
 (此版本根据微信的mmmojo源码再次重构, 逻辑更清晰)  
 其中3rdparty是编译好的libprotobuf库, examples里是调用方法的示例, proto里是WeChat与组件之间的Protobuf通信协议的定义文件。  
 src文件夹里 include中mmmojo_source是微信MMMojo的源代码中的一些定义, qq_mojoipc是实现QQMojoIPC的头文件, xplugin_protobuf是使用protoc编译后的头文件。  
+<<<<<<< HEAD
 qq_mojoipc文件夹是实现QQMojoIPC的实现文件, mmmojocall里是实现调用微信XPlugin组件的实现文件, 其中mmmojo_call.cpp是基础的调用XPlugin的方法, wrapper里是封装了对应组件通信协议的文件。
+=======
+qq_mojoipc文件夹是实现QQMojoIPC的实现文件, wrapper里是实现调用微信XPlugin组件的实现文件, 其中mmmojo_call.cpp是基础的调用XPlugin的方法, mmmojo_ocr.cpp和mmmojo_utility.cpp是封装了对应组件通信协议的文件。
+>>>>>>> 1a48e09b4568bd7700176d1d043645ffbf7dc286
 
 # 编译说明
 本项目使用cmake, 以下为cmake选项说明:  
