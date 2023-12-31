@@ -17,7 +17,6 @@
 
 3. WeChatPlayer.exe:
 - [x] 本地视频播放功能
-- [ ] 网络视频播放功能
 
 # 项目结构  
 ├─3rdparty  
@@ -108,5 +107,9 @@ message QRScanReqMessage {
 }
 
 ```
+# 相关项目
+>本人代码能力比较差，此项目写的可能不是很方便使用，以下为其他师傅对本项目代码优化后的相关项目：
+1. [swigger: wechat-ocr](https://github.com/swigger/wechat-ocr)
+2. [kanadeblisst00: wechat_ocr](https://github.com/kanadeblisst00/wechat_ocr)
 
 
