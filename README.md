@@ -111,5 +111,6 @@ message QRScanReqMessage {
 >本人代码能力比较差，此项目写的可能不是很方便使用，以下为其他师傅对本项目代码优化后的相关项目：
 1. [swigger: wechat-ocr](https://github.com/swigger/wechat-ocr)
 2. [kanadeblisst00: wechat_ocr](https://github.com/kanadeblisst00/wechat_ocr)
+3. [code-jar: WeChatOCR-Web](https://github.com/code-jar/WeChatOCR-Web)
 
 
